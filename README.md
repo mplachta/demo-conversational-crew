@@ -1,6 +1,6 @@
-# SRS Distribution Chatbot Crew
+# DemoChatbot Crew
 
-A chatbot crew for SRS Distribution.
+A chatbot crew for CrewAI Demo.
 
 ## Installation
 
