@@ -1,0 +1,726 @@
+Article title,Article subtitle,Article URL,Article body,Category,Keywords
+How to build a crew for CrewAI Enterprise,"Building crews with ""crewai create name"" CLI",https://help.crewai.com/how-to-build-a-crew-for-crewai,"<div class=""hs-embed-wrapper hs-fullwidth-embed"" style=""position: relative; overflow: hidden; width: 100%; height: auto; padding: 0px; min-width: 256px; display: block; margin: auto;"" data-service=""youtube"" data-responsive=""true""><div class=""hs-embed-content-wrapper""><div style=""position: relative; overflow: hidden; max-width: 100%; padding-bottom: 75%; margin: 0px;""><iframe width=""256"" height=""192"" src=""https://www.youtube.com/embed/d1Yp8eeknDk?feature=oembed"" frameborder=""0"" allow=""accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"" referrerpolicy=""strict-origin-when-cross-origin"" allowfullscreen="""" title=""crewai+ demo"" style=""position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;""></iframe></div></div></div>
+<h3>Disclaimer: User crewAI version 0.30.11 or newer</h3>
+<h3>1. Installation and Setup</h3>
+<p>Ensure that you have the latest version of CrewAI installed. <br>If you're new to CrewAI, <a href=""http://docs.crewai.com/how-to/Installing-CrewAI"" target=""_blank"" rel=""noopener"">visit our official docs to download the software and find comprehensive installation instructions.</a></p>
+<div>
+<div>To install crewAI, you need to have <strong>Python &gt;=3.10 and &lt;=3.13</strong> installed on your system:</div>
+<div><strong>Make sure you are using CrewAI version 0.30.11 or newer!</strong></div>
+<pre># Install the mains CrewAI package<br>pip install crewai<br><br><br># Install the main CrewAI package and the tools package<br># that includes a series of helpful tools for your agents<br>pip install 'crewai[tools]'</pre>
+</div>
+<h3>2. Creating a New Project</h3>
+<p>To create a new project, open your terminal and execute the following command:</p>
+<pre>crewai create crew your_project_name</pre>
+<p>This command initializes a new project and automatically generates the necessary files for your crew, laying the groundwork for your AI-driven team-building process.</p>
+<h3>3. Understand your project files</h3>
+<div>
+<div>You can now go into your project folder:</div>
+<pre>cd your_project_name</pre>
+<p>Within this folder you will find your initial crew project structure, these are the main files:</p>
+<div>
+<pre>.<br>├── README.md<br>├── poetry.lock<br>├── pyproject.toml<br>├── .env<br>├── .gitignore<br>├── trained_agents_data.pkl (created after you run training mode)<br>├── training_data.pkl &nbsp; &nbsp; &nbsp; (created after you run training mode)<br>├── src<br>│ &nbsp; └── your_project_name<br>│ &nbsp; &nbsp; &nbsp; ├── __init__.py<br>│ &nbsp; &nbsp; &nbsp; ├── config<br>│ &nbsp; &nbsp; &nbsp; │ &nbsp; ├── agents.yaml<br>│ &nbsp; &nbsp; &nbsp; │ &nbsp; └── tasks.yaml<br>│ &nbsp; &nbsp; &nbsp; ├── crew.py<br>│ &nbsp; &nbsp; &nbsp; ├── main.py<br>│ &nbsp; &nbsp; &nbsp; └── tools<br>│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ├── __init__.py<br>│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; └── custom_tool.py<br>└── tests</pre>
+<h4>Main files</h4>
+<div>- <code>src/your_project_name/config/agents.yaml</code> to define your agents</div>
+<div>- <code>src/your_project_name/config/tasks.yaml</code> to define your tasks</div>
+<div>- <code>src/your_project_name/tools/custom_tool.py</code> example of a custom tool</div>
+<div>- <code>src/your_project_name/crew.py</code> to add your own logic, tools and specific args</div>
+<div>- <code>src/your_project_name/main.py</code> runs your crew locally.</div>
+<div>- <code>src/your_project_name/.env</code> holds your environment variables</div>
+</div>
+<div>&nbsp;</div>
+<div>
+<h3>4. Environment Variables</h3>
+<p>You will probably need environment variables to connect to your LLM provider or other tools, locally you can set them by using the <code>src/your_project_name/.env</code> file.</p>
+<h3>5. Installing Dependencies</h3>
+</div>
+<div>First, if you haven't already, install Poetry:</div>
+<pre>pip install poetry</pre>
+<div>Next, install the dependencies (in your project directory):</div>
+<pre>poetry install</pre>
+<div>
+<h3>6. Running your crew locally</h3>
+</div>
+<div>
+<div>To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:</div>
+<pre>crewai run<br><br>OR<br><br>poetry run your_project_name</pre>
+<div><span style=""color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">&nbsp;</span></div>
+<div>
+<h3>7. Deploy your crew to crewAI&nbsp;Enterprise</h3>
+<p>For learning more about deploying to crewAI Enterprise check our help center article about it.</p>
+</div>
+<div><span style=""color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">For further assistance or queries, feel free to <a href=""mailto:support@crewai.com"" rel=""noopener"">contact our support team</a> (support@crewai.com).</span></div>
+</div>
+</div>
+<p><br>Welcome to the future of team building with CrewAI Enterprise</p>",Getting started,"creating crew,crewai+,env vars,creating agents,creating tasks"
+How is task execution handled in the hierarchical process?,A manager agent is automatically created,https://help.crewai.com/how-is-task-execution-handled-in-the-hierarchical-process,"In the hierarchical process, a manager agent is automatically created and coordinates the workflow, delegating tasks and validating outcomes for streamlined and effective execution. The manager agent utilizes tools to facilitate task delegation and execution by agents under the manager's guidance. The manager LLM is crucial for the hierarchical process and must be set up correctly for proper function.",FAQs,
+Deploying your crew to crewAI Enterprise,Step by step on how to deploy you crew to CrewAI Enterprise using Github ,https://help.crewai.com/deploying-your-crew-to-crewai,"<div>
+<div>Turning your crew into an API and bringing it to production is pretty simple, it is a 3 step process:</div>
+<ol>
+<li>Pushing to Github</li>
+<li>&nbsp;Connecting Github to CrewAI Enterprise</li>
+<li>Select the desired crew repository</li>
+<li>Set environment variables</li>
+<li>Click on deploy</li>
+<li>Test your live crew</li>
+</ol>
+</div>
+<h3>1. Pushing to Github</h3>
+<div>First, you need to push your crew to a Github repository, <a href=""https://help.crewai.com/how-to-build-a-crew-for-crewai"" target=""_blank"" rel=""noopener"">if you haven't created a crew yet you can follow this tutorial.</a></div>
+<div>&nbsp;</div>
+<div>
+<h3>2. Connecting Github to CrewAI Enterprise</h3>
+<p>When you log into CrewAI you can click on the button ""Connect Github""</p>
+<p><img alt=""Screenshot 2024-04-14 at 18.09.44"" height=""171"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-14%20at%2018.09.44.png"" width=""670"" loading=""lazy""></p>
+</div>
+<h3>3. Select the design crew repository</h3>
+<p>When you log into CrewAI you can click on the button ""Connect Github""</p>
+<p><img alt=""Screenshot 2024-04-14 at 18.16.34"" height=""213"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-14%20at%2018.16.34.png"" width=""670"" loading=""lazy""></p>
+<h3>4. Set environment variables</h3>
+<p>You will need your environment variables to connect to your LLM provider or other tools, you can set them in bulk or individually before the deploy:</p>
+<p><img alt=""Screenshot 2024-04-14 at 18.17.16"" height=""297"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-14%20at%2018.17.16.png"" width=""670"" loading=""lazy""></p>
+<h3>5. Deploy your crew</h3>
+<p>After you click on deploy, you will be able to monitor the progress through a progress bar, initially the first deploy takes around 10m-15m. Deploys after this initial one will be faster.</p>
+<p><img alt=""Screenshot 2024-04-14 at 18.22.02"" height=""415"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-14%20at%2018.22.02.png"" width=""670"" loading=""lazy""></p>
+<p>&nbsp;</p>",Getting started,
+Updating my crew in CrewAI Enterprise ,Updating your crew code in your CrewAI deployment,https://help.crewai.com/updating-my-crew-in-crewai,"<p>crewAI won't automatically pick up Github updates as default, so you will probably find yourself wanting to update you crew manually eventually.&nbsp;</p>
+<p>There are a few different reasons for you to update your crew deployment:</p>
+<ul>
+<li>You want to update the code with a latest commit you pushed to Github</li>
+<li>You want to reset the bearer token for security reasons</li>
+<li>You want to update environment variables</li>
+</ul>
+<h3>1. Just updating your crew for a latest commit</h3>
+<p>All you have to do is to click on the ""Re-deploy"" button on your crew and that should trigger an update that you can tag along using a progress bar.</p>
+<p><img alt=""Screenshot 2024-04-15 at 04.05.03"" height=""331"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-15%20at%2004.05.03.png"" width=""670"" loading=""lazy""></p>
+<h3>2. Reset bearer token</h3>
+<p>You might find yourself wanting to re-deploy while also reseting the bearer token protecting your app as you might have inadvertently leaked it.&nbsp;</p>
+<p><img alt=""Screenshot 2024-04-15 at 04.05.47"" height=""331"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-15%20at%2004.05.47.png"" width=""670"" loading=""lazy""></p>
+<h3>3. Updating Environment Variables</h3>
+<p>You might find yourself wanting to update your environment variables, maybe to change a model or another integration. If that is the case you want to go into the deployment page and update the values from there.</p>
+<p>First access the deployment page by clicking the crew's name.</p>
+<p><img alt=""Screenshot 2024-04-15 at 04.06.31"" height=""333"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-15%20at%2004.06.31.png"" width=""670"" loading=""lazy""></p>
+<p>Now you can go into the Environment variable section and update values from there,a nd click on the update deployment button, this will also trigger a new deploy but this will only update the environment variables and not the code itself</p>
+<p><img alt=""Screenshot 2024-04-15 at 04.08.39-1"" height=""465"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Screenshot%202024-04-15%20at%2004.08.39-1.png"" width=""670"" loading=""lazy""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>",Getting started,"creating crew,crewai+,env vars,updating crews,bearer token,reset bearer token"
+Using your crew's API in CrewAI Enterprise,How to turn your crew into an API within seconds and use it,https://help.crewai.com/using-your-crews-api-in-crewai,"<p>This article assumes you already <a href=""https://help.crewai.com/how-to-build-a-crew-for-crewai"" target=""_blank"" rel=""noopener"">build your crew</a> and <a href=""https://help.crewai.com/deploying-your-crew-to-crewai"" target=""_blank"" rel=""noopener"">deployed it on CrewAI</a><br>Assuming you have your crew live, you should have a base URL and a Bearer Token that got generated for you.&nbsp;</p>
+<p>Now your crew is basically an API and you call it using two main REST endpoints:</p>
+<ul>
+<li><code>[GET] /inputs</code> - List all required inputs for the crew kickoff</li>
+<li><code>[POST] /kickoff</code> - Starts a crew passing it's inputs and optional callbacks, you get back a <code>task_id</code></li>
+<li>
+<div><code>[GET] /status/{task_id}</code> - Using the <code>task_id</code> from the /kickoff request you can now pull this endpoint to get the task completion</div>
+</li>
+</ul>
+<p>All endpoints are protected by a bearer token that is unique to your app, and that should be send using the authorization header.</p>
+<h3>Inputs Endpoint</h3>
+<p>The inputs endpoint is useful for you to programmatically learn the required inputs for your crew.</p>
+<h3>Meta&nbsp;</h3>
+<p>Allows you to pass in additional parameter</p>
+<h3>Kickoff Endpoint</h3>
+<p>The kickoff endpoint requires at least one attribute called <code>input</code> this input should be a dictionary with all the attributes the crew expects, anything you interpolated on the agents or tasks.</p>
+<p>The kickoff endpoint also supports 3 extra arguments:</p>
+<ul>
+<li><code>taskWebhookUrl</code> - Callback that will be executed upon the end of each task</li>
+<li>
+<div>
+<div><code>stepWebhookUrl</code> <span style=""color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">- Callback that will be executed upon each agent inner thought</span></div>
+</div>
+</li>
+<li><code>crewWebhookUrl</code> - Callback that will be executed upon the end of the crew execution</li>
+</ul>
+<p>Here is an example of an input for a Trip Planner crew:</p>
+<div>
+<pre>{<br>  ""inputs"": {<br>  &nbsp; ""budget"": ""1000 USD"",<br>  &nbsp; ""interests"": ""games, tech, ai, relaxing hikes, amazing food"",<br>  &nbsp; ""duration"": ""7 days"",<br>  &nbsp; ""age"": ""35""<br>  },<br>  ""meta"": ""...."",<br>  ""taskWebhookUrl"": ""https://..."",<br>  ""stepWebhookUrl"": ""https://..."",<br>  ""crewWebhookUrl"": ""https://...""<br>}</pre>
+<h3>Status Endpoint</h3>
+<p>The status endpoint allows you to tag along an execution by polling on this endpoint until you the get the full result of your crew.</p>
+<br><br></div>",Getting started,"creating crew,crewai+,api"
+How can you control the maximum number of requests per minute that the entire crew can perform?,The max_rpm attribute,https://help.crewai.com/how-can-you-control-the-maximum-number-of-requests-per-minute-that-the-entire-crew-can-perform,<p>The&nbsp;<code>max_rpm</code>&nbsp;attribute sets the maximum number of requests per minute the crew can perform to avoid rate limits and will override individual agents'&nbsp;<code>max_rpm</code>&nbsp;settings if you set it.</p>,FAQs,creating crew
+Where can I get the latest crewAI documentation?,https://docs.crewai.com/,https://help.crewai.com/where-can-i-get-the-latest-crewai-documentation,"The most up-to-date documentation for crewAI is available on our official documentation website <a href=""https://docs.crewai.com/"" target=""_blank"" rel=""noreferrer noopener"">https://docs.crewai.com/</a>",FAQs,
+Ware are the Key Differences Between Hierarchical and Sequential Processes in CrewAI,The hierarchical process is better suited for complex projects because it allows for:,https://help.crewai.com/ware-are-the-key-differences-between-hierarchical-and-sequential-processes-in-crewai,"<p><strong>Key Differences Between Hierarchical and Sequential Processes in CrewAI</strong></p>
+<ul>
+<li><strong>Hierarchical Process:</strong>
+<ul>
+<li>Tasks are delegated and executed based on a structured chain of command.</li>
+<li>A manager language model (manager_llm) must be specified for the manager agent.</li>
+<li>Manager agent oversees task execution, planning, delegation, and validation.</li>
+<li>Tasks are not pre-assigned; the manager allocates tasks to agents based on their capabilities.</li>
+</ul>
+</li>
+<li><strong>Sequential Process:</strong>
+<ul>
+<li>Tasks are executed one after another, ensuring tasks are completed in an orderly progression.</li>
+<li>Output of one task serves as context for the next.</li>
+<li>Task execution follows the predefined order in the task list.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Which Process is Better Suited for Complex Projects?</strong></p>
+<p>The hierarchical process is better suited for complex projects because it allows for:</p>
+<ul>
+<li><strong>Dynamic task allocation and delegation:</strong>&nbsp;Manager agent can assign tasks based on agent capabilities, allowing for efficient resource utilization.</li>
+<li><strong>Structured validation and oversight:</strong>&nbsp;Manager agent reviews task outputs and ensures task completion, increasing reliability and accuracy.</li>
+<li><strong>Complex task management:</strong>&nbsp;Assigning tools at the agent level allows for precise control over tool availability, facilitating the execution of intricate tasks.</li>
+</ul>",FAQs,
+What are the benefits of using memory in the CrewAI framework?,Benefits of using memory in CrewAI framework:,https://help.crewai.com/what-are-the-benefits-of-using-memory-in-the-crewai-framework,"<ul>
+<li><strong>Adaptive Learning:</strong>&nbsp;Crews become more efficient over time, adapting to new information and refining their approach to tasks.</li>
+<li><strong>Enhanced Personalization:</strong>&nbsp;Memory enables agents to remember user preferences and historical interactions, leading to personalized experiences.</li>
+<li><strong>Improved Problem Solving:</strong>&nbsp;Access to a rich memory store aids agents in making more informed decisions, drawing on past learnings and contextual insights.</li>
+</ul>",FAQs,
+What is the purpose of setting a maximum RPM limit for an agent?,,https://help.crewai.com/what-is-the-purpose-of-setting-a-maximum-rpm-limit-for-an-agent,"Setting a maximum RPM limit for an agent prevents the agent from making too many requests to external services, which can help to avoid rate limits and improve performance.",FAQs,
+What role does human input play in the execution of tasks within a CrewAI crew?,It allows agents to request additional information or clarification when necessary.,https://help.crewai.com/what-role-does-human-input-play-in-the-execution-of-tasks-within-a-crewai-crew,"<p>This feature is crucial in complex decision-making processes or when agents require more details to complete a task effectively.</p>
+<p>To integrate human input into agent execution, set the <strong>human_input </strong>flag in the task definition. When enabled, the agent prompts the user for input before delivering its final answer. This input can provide extra context, clarify ambiguities, or validate the agent's output.</p>
+<p>Click <a href=""https://docs.crewai.com/how-to/Human-Input-on-Execution/"" target=""_blank"" rel=""noopener"">here</a> for more details</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>",FAQs,
+What advanced customization options are available for tailoring and enhancing agent behavior and capabilities in CrewAI?,CrewAI provides a range of advanced customization options to tailor and enhance agent behavior and capabilities:,https://help.crewai.com/what-advanced-customization-options-are-available-for-tailoring-and-enhancing-agent-behavior-and-capabilities-in-crewai,"<ul>
+<li>
+<p><strong>Language Model Customization:</strong>&nbsp;Agents can be customized with specific language models (llm) and function-calling language models (function_calling_llm), offering advanced control over their processing and decision-making abilities.</p>
+</li>
+<li>
+<p><strong>Performance and Debugging Settings:</strong>&nbsp;Adjust an agent's performance and monitor its operations for efficient task execution.</p>
+</li>
+</ul>
+<ul>
+<li><strong>Verbose Mode:</strong> Enables detailed logging of an agent's actions, useful for debugging and optimization.</li>
+<li><strong>RPM Limit</strong>: Sets the maximum number of requests per minute (max_rpm).</li>
+</ul>
+<ul>
+<li>
+<p><strong>Maximum Iterations for Task Execution:</strong>&nbsp;The max_iter attribute allows users to define the maximum number of iterations an agent can perform for a single task, preventing infinite loops or excessively long executions.</p>
+</li>
+<li>
+<p><strong>Delegation and Autonomy:</strong>&nbsp;Control an agent's ability to delegate or ask questions, tailoring its autonomy and collaborative dynamics within the CrewAI framework. By default, the allow_delegation attribute is set to True, enabling agents to seek assistance or delegate tasks as needed. This default behavior promotes collaborative problem-solving and efficiency within the CrewAI ecosystem. If needed, delegation can be disabled to suit specific operational requirements.</p>
+</li>
+<li>
+<p><strong>Human Input in Agent Execution:</strong>&nbsp;Human input is critical in several agent execution scenarios, allowing agents to request additional information or clarification when necessary. This feature is especially useful in complex decision-making processes or when agents require more details to complete a task effectively.</p>
+</li>
+</ul>",FAQs,
+In what scenarios is human input particularly useful in agent execution?,,https://help.crewai.com/in-what-scenarios-is-human-input-particularly-useful-in-agent-execution,"<p><strong>Human input is particularly useful in agent execution when:</strong></p>
+<ul>
+<li><strong>Agents require additional information or clarification:</strong>&nbsp;When agents encounter ambiguity or incomplete data, human input can provide the necessary context to complete the task effectively.</li>
+<li><strong>Agents need to make complex or sensitive decisions:</strong>&nbsp;Human input can assist agents in ethical or nuanced decision-making, ensuring responsible and informed outcomes.</li>
+<li><strong>Oversight and validation of agent output:</strong>&nbsp;Human input can help validate the results generated by agents, ensuring accuracy and preventing any misinterpretation or errors.</li>
+<li><strong>Customizing agent behavior:</strong>&nbsp;Human input can provide feedback on agent responses, allowing users to refine the agent's behavior and responses over time.</li>
+<li><strong>Identifying and resolving errors or limitations:</strong>&nbsp;Human input can help identify and address any errors or limitations in the agent's capabilities, enabling continuous improvement and optimization.</li>
+</ul>",FAQs,
+ What are the different types of memory that are available in crewAI?,,https://help.crewai.com/-what-are-the-different-types-of-memory-that-are-available-in-crewai,"<p>The different types of memory available in crewAI are short-term memory, long-term memory, entity memory, and contextual memory.</p>
+<p>Click <a href=""https://docs.crewai.com/core-concepts/Memory/"" target=""_blank"" rel=""noopener"">here</a> for more details.</p>
+<p>&nbsp;</p>",FAQs,
+How to use Output Pydantic in a Task?,,https://help.crewai.com/how-to-use-output-pydantic-in-a-task,"<p>To use Output Pydantic in a task, you need to define the expected output of the task as a Pydantic model. Here's an example:</p>
+<p>1. First, you need to define a Pydantic model. For instance, let's create a simple model for a user:</p>
+<p>&nbsp;</p>
+<p><code><em>from pydantic import BaseModel</em></code><br><br><code><em>class User(BaseModel):</em></code><br><code><em>&nbsp; &nbsp; name: str</em></code><br><code><em>&nbsp; &nbsp; age: int</em></code></p>
+<p>2. Then, when creating a task, specify the expected output as this Pydantic model:</p>
+<p><code>from crewai import Task, Crew, Agent</code><br><br><code><em># Import the User model</em></code><br><code><em>from my_models import User</em></code><br><br><code><em># Create a task with Output Pydantic</em></code><br><code><em>task = Task(</em></code><br><code><em>&nbsp; &nbsp; description=""Create a user with the provided name and age"",</em></code><br><code><em>&nbsp; &nbsp; expected_output=User, &nbsp;# This is the Pydantic model</em></code><br><code><em>&nbsp; &nbsp; agent=agent,</em></code><br><code><em>&nbsp; &nbsp; tools=[tool1, tool2]</em></code><br><code><em>)</em></code></p>
+<p>3. I<span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">n your agent, make sure to set the output_pydantic attribute to the Pydantic model you're using:</span></p>
+<p><code><em><span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-weight: var(--primary-body-font-weight);"">from crewai import Agent<br><br># Import the User model<br>from my_models import User<br><br># Create an agent with Output Pydantic<br>agent = Agent(<br>&nbsp; &nbsp; role='User Creator',<br>&nbsp; &nbsp; goal='Create users',<br>&nbsp; &nbsp; backstory='I am skilled in creating user accounts',<br>&nbsp; &nbsp; tools=[tool1, tool2],<br>&nbsp; &nbsp; output_pydantic=User<br>)</span></em></code></p>
+4. When executing the crew, the output of the task will be a User object:<br>
+<div>&nbsp;</div>
+<div><em>&nbsp;<code>from crewai import Crew</code></em><br><br><code><em># Create a crew with the agent and task</em></code><br><code><em>crew = Crew(agents=[agent], tasks=[task])</em></code><br><br><code><em># Kick off the crew</em></code><br><code><em>result = crew.kickoff()</em></code><br><br><code><em># The output of the task will be a User object</em></code><br><code><em>print(result.tasks[0].output)</em></code></div>
+<p>&nbsp;</p>",FAQs,
+How can I create custom tools for my CrewAI agents?,,https://help.crewai.com/how-can-i-create-custom-tools-for-my-crewai-agents,"<h4>You can create custom tools by subclassing the BaseTool class provided by CrewAI or by using the tool decorator. Subclassing involves defining a new class that inherits from BaseTool, specifying the name, description, and the _run method for operational logic. The tool decorator allows you to create a Tool object directly with the required attributes and a functional logic.</h4>
+<p>Click <a href=""https://docs.crewai.com/how-to/Create-Custom-Tools/"" target=""_blank"" rel=""noopener"">here </a>for more details</p>",FAQs,
+What question is your article answering?,,https://help.crewai.com/-temporary-slug-ed74f853-77b1-4feb-8967-3276197bdc3f,,,
+How to kick-off your crew,,https://help.crewai.com/how-to-kick-off-your-crew,"<p>To run your crew, follow these steps:<br>Click on the project name: Navigate to your project in CrewAI.</p>
+<p><img alt=""brave_zQqY8GQPUN"" height=""615"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_zQqY8GQPUN.png"" width=""670"" loading=""lazy""></p>
+<p>Click the kickoff link: This will initiate the crew setup process.</p>
+<p><img alt=""brave_shVuoJFTlC"" height=""272"" style=""height: auto; max-width: 100%; width: 614px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_shVuoJFTlC.png"" width=""614"" loading=""lazy""></p>
+<p>Enter data for the crew: Provide the necessary input data for the crew to process.</p>
+<p>Click the start kickoff button: This will run the crew with the provided data.</p>
+<p><img alt=""brave_BGbMkvtpsu"" height=""417"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_BGbMkvtpsu.png"" width=""670"" loading=""lazy""></p>
+<p>Once the crew is running, copy the task ID for tracking purposes.</p>
+<p><img alt=""brave_XxF4XvR5u5"" height=""369"" style=""height: auto; max-width: 100%; width: 642px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_XxF4XvR5u5.png"" width=""642"" loading=""lazy""></p>
+<p>Paste the task ID and click Get Status: Use the task ID to check the status of the crew.</p>
+<p><img alt=""brave_R9zLBOkN3N"" height=""366"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_R9zLBOkN3N.png"" width=""670"" loading=""lazy""></p>
+<p>Review the status and final outcome: Monitor the crew's progress and review the final output.</p>
+<p><img alt=""brave_UJsSH9ziHR"" height=""460"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_UJsSH9ziHR.png"" width=""670"" loading=""lazy""></p>
+<p>&nbsp;</p>",Getting started,
+How to Kickoff a Crew from Slack,,https://help.crewai.com/how-to-kickoff-a-crewai-crew-from-slack,"<p>This guide explains how to start a crew directly from Slack using the CrewAI integration.</p>
+<p>Prerequisites:</p>
+<ul>
+<li>CrewAI integration installed and connected to your Slack workspace</li>
+<li>At least one crew configured in CrewAI</li>
+</ul>
+<p>Steps:</p>
+<ol>
+<li>Ensure the CrewAI Slack integration is set up:
+<ul>
+<li>In the CrewAI dashboard, navigate to the ""Integrations"" section (Image 1).</li>
+</ul>
+<br>&nbsp;<img alt=""brave_yRv6tG9wBE"" height=""201"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_yRv6tG9wBE.png"" width=""670"" loading=""lazy"">
+<ul>
+<li>Verify that Slack is listed and shows a ""Connected"" status.</li>
+</ul>
+</li>
+<li>Open Slack and navigate to the channel where you want to kickoff the crew.</li>
+<li>Type the slash command ""/kickoff"" to initiate the crew kickoff process.
+<ul>
+<li>You should see a&nbsp; ""Kickoff crew"" appear as you type (Image 2).</li>
+<li><img alt=""slack_NZKMBihIYj"" height=""157"" style=""height: auto; max-width: 100%; width: 601px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/slack_NZKMBihIYj.png"" width=""601"" loading=""lazy""></li>
+</ul>
+</li>
+<li>Press Enter or select the ""Kickoff crew"" option. A dialog box titled ""Kickoff an AI Crew"" will appear</li>
+<li>In the dropdown menu labeled ""Select of the crews online:"", choose the crew you want to start.
+<ul>
+<li>In the example (Image 3), ""prep-for-meet"" is selected.</li>
+<li><img alt=""slack_EXxIWk74vJ"" height=""333"" style=""height: auto; max-width: 100%; width: 631px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/slack_EXxIWk74vJ.png"" width=""631"" loading=""lazy""></li>
+</ul>
+</li>
+<li>If your crew requires any inputs, click the ""Add Inputs"" button to provide them.
+<ul>
+<li>Note: The ""Add Inputs"" button is shown in Image 3 but is not yet clicked.</li>
+</ul>
+</li>
+<li>Once you've selected the crew and added any necessary inputs, click ""Add Inputs"" to start the crew.<br><br><img height=""771"" style=""height: auto; width: 628px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png.png"" width=""628"" loading=""lazy""></li>
+<li>Click Kickoff and wait for the crew to complete<br><img height=""678"" style=""height: auto; width: 653px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-1.png"" width=""653"" loading=""lazy""></li>
+</ol>
+<p>Tips:</p>
+<ul>
+<li>Make sure you have the necessary permissions to use the /kickoff command in your Slack workspace.</li>
+<li>If you don't see your desired crew in the dropdown, ensure it's properly configured and online in CrewAI.<br><br></li>
+</ul>",FAQs,slack
+How to export and use a React Component,,https://help.crewai.com/how-to-export-and-use-a-react-component,"<p>Click on the ellipsis and select the export option and save the file locally. We will be using CrewLead.jsx for our example.</p>
+<p><img height=""359"" style=""height: auto; width: 493px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-2.png"" width=""493"" loading=""lazy""></p>
+<p>To run this React component locally, you'll need to set up a React development environment and integrate this component into a React project. Here's a step-by-step guide to get you started:</p>
+<ol>
+<li>Install Node.js:
+<ul>
+<li>Download and install Node.js from the official website: <a href=""https://nodejs.org/"">https://nodejs.org/</a></li>
+<li>Choose the LTS (Long Term Support) version for stability.</li>
+</ul>
+</li>
+<li>Create a new React project:
+<ul>
+<li>Open Command Prompt or PowerShell</li>
+<li>Navigate to the directory where you want to create your project</li>
+<li>Run the following command to create a new React project:
+<div>
+<div>&nbsp;</div>
+<div>
+<div><code>npx create-react-app my-crew-app</code></div>
+</div>
+</div>
+</li>
+<li>Change into the project directory:
+<div>
+<div>&nbsp;</div>
+<div>
+<div><code>cd my-crew-app</code></div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li>Install necessary dependencies:
+<ul>
+<li>In your project directory, run:
+<div>
+<div>&nbsp;</div>
+<div>
+<div><code>npm install react-dom</code></div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li>Create the CrewLead component:
+<ul>
+<li>&nbsp;move the downloaded file <code>CrewLead.jsx</code>&nbsp; into the <code>src</code> folder of your project,<br><br></li>
+</ul>
+</li>
+<li>Modify your <code>App.js</code> to use the CrewLead component:
+<ul>
+<li>Open <code>src/App.js</code></li>
+<li>Replace its contents with something like this:
+<div>
+<div>jsx</div>
+<div>
+<div>Copy</div>
+</div>
+<div>
+<div><code>import React from 'react';<br>import CrewLead from './CrewLead';<br><br>function App() {<br>  return (<br>    &lt;div className=""App""&gt;<br>      &lt;CrewLead <br>        baseUrl=""YOUR_API_BASE_URL"" <br>        bearerToken=""YOUR_BEARER_TOKEN""<br>      /&gt;<br>    &lt;/div&gt;<br>  );<br>}<br><br>export default App;</code></div>
+</div>
+</div>
+</li>
+<li>Replace <code>YOUR_API_BASE_URL</code> and <code>YOUR_BEARER_TOKEN</code> with the actual values for your API.</li>
+</ul>
+</li>
+<li>Start the development server:
+<ul>
+<li>In your project directory, run:
+<div>
+<div>&nbsp;</div>
+<div>
+<div><code>npm start</code></div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<p>This will start the development server, and your default web browser should open automatically to <code>http://localhost:3000</code>, where you'll see your React app running.</p>
+<p>You can then customise the CrewLead.jsx to add color, title etc</p>
+<p><img height=""939"" style=""height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-3.png"" width=""1119"" loading=""lazy""></p>
+<p><img height=""427"" style=""height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-4.png"" width=""1058"" loading=""lazy""></p>
+<p>&nbsp;</p>",FAQs,
+How to Invite Team Members to Your CrewAI+ Enterprise Organization,,https://help.crewai.com/how-to-invite-team-members-to-your-crewai-enterprise-organization,"<p>As an administrator of a CrewAI+ Enterprise account, you can easily invite new team members to join your organization. This article will guide you through the process step-by-step.</p>
+<ol>
+<li>Access the Settings Page
+<ul>
+<li>Log in to your CrewAI+ Enterprise account</li>
+<li>Look for the gear icon (⚙️) in the top right corner of the dashboard</li>
+<li>Click on the gear icon to access the Settings page<br><img height=""272"" style=""height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-03-47-17-3426-PM.png"" width=""367"" loading=""lazy""></li>
+</ul>
+</li>
+<li>Navigate to the Members Section
+<ul>
+<li>On the Settings page, you'll see a ""General configuration"" header</li>
+<li>Below this, find and click on the ""Members"" tab</li>
+</ul>
+</li>
+<li>Invite New Members
+<ul>
+<li>In the Members section, you'll see a list of current members (including yourself)</li>
+<li>At the bottom of the list, locate the ""Email"" input field</li>
+<li>Enter the email address of the person you want to invite</li>
+<li>Click the ""Invite"" button next to the email field</li>
+</ul>
+</li>
+<li>Repeat as Needed
+<ul>
+<li>You can repeat this process to invite multiple team members</li>
+<li>Each invited member will receive an email invitation to join your organization</li>
+</ul>
+</li>
+</ol>
+<p>Important Notes:</p>
+<ul>
+<li>Only users with administrative privileges can invite new members</li>
+<li>Ensure you have the correct email addresses for your team members</li>
+<li>Invited members will need to accept the invitation to join your organization</li>
+<li>You may want to inform your team members to check their email (including spam folders) for the invitation</li>
+</ul>
+<p>By following these steps, you can easily expand your team and collaborate more effectively within your CrewAI+ Enterprise organization.</p>",FAQs,
+Using Webhooks in CrewAI+ Enterprise,,https://help.crewai.com/using-webhooks-in-crewai-enterprise,"<p>CrewAI+ Enterprise allows you to automate your workflow using webhooks. This article will guide you through the process of setting up and using webhooks to kickoff your crew execution, with a focus on integration with ActivePieces, a workflow automation platform similar to Zapier and Make.com.</p>
+<h3 style=""text-align: center;""><span style=""text-decoration: underline;"">Setting Up Webhooks in the UI</span></h3>
+<h3>1. Accessing the Kickoff Interface</h3>
+<ul>
+<li>Navigate to the CrewAI+ Enterprise dashboard</li>
+<li>Look for the ""/kickoff"" section, which is used to start the crew execution<br><img height=""358"" style=""height: auto; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-13-50-2807-PM.png"" width=""670"" loading=""lazy""></li>
+</ul>
+<h3>2. Configuring the JSON Content</h3>
+<p>In the JSON Content section, you'll need to provide the following information:</p>
+<ul>
+<li><code>inputs</code>: A JSON object containing:
+<ul>
+<li><code>company</code>: The name of the company (e.g., ""tesla"")</li>
+<li><code>product_name</code>: The name of the product (e.g., ""crewai"")</li>
+<li><code>form_response</code>: The type of response (e.g., ""financial"")</li>
+<li><code>icp_description</code>: A brief description of the Ideal Customer Profile</li>
+<li><code>product_description</code>: A short description of the product</li>
+</ul>
+</li>
+<li><code>taskWebhookUrl</code>, <code>stepWebhookUrl</code>, <code>crewWebhookUrl</code>: URLs for various webhook endpoints (ActivePieces, Zapier, Make.com or another compatible platform)</li>
+<li>Then click the Start Kickoff</li>
+</ul>
+<h3 style=""text-align: center;""><span style=""text-decoration: underline;"">ActivePieces Example</span></h3>
+<p>In this example we will be using ActivePieces. You can use other platforms such as Zapier and Make.com</p>
+<h3>3. Integrating with ActivePieces</h3>
+<p>To integrate with ActivePieces:</p>
+<ol>
+<li>Set up a new flow in ActivePieces</li>
+<li>Add a trigger (e.g., ""Every Day"" schedule)<br><img height=""773"" style=""height: auto; width: 595px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-17-32-7382-PM.png"" width=""595"" loading=""lazy""></li>
+<li>Add an HTTP action step
+<ul>
+<li>Set the action to ""Send HTTP request""</li>
+<li>Use POST as the method</li>
+<li>Set the URL to your CrewAI+ kickoff endpoint</li>
+<li>Add necessary headers (e.g., Bearer Token)<br><img height=""572"" style=""height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-54-37-2665-PM.png"" width=""449"" loading=""lazy""></li>
+<li>In the body, include the JSON content as configured in step 2<br><img height=""401"" style=""height: auto; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-17-54-3962-PM.png"" width=""670"" loading=""lazy""></li>
+</ul>
+</li>
+</ol>
+<h4>The crew will then kickoff at the pre-defined time.</h4>
+<h3>4. Setting Up the Webhook</h3>
+<ol>
+<li>Create a new flow in ActivePieces and name it&nbsp;<br><br><br><img height=""683"" style=""height: auto; width: 544px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-26-51-9425-PM.png"" width=""544"" loading=""lazy""></li>
+<li>Add a webhook step as the trigger:
+<ul>
+<li>Select ""Catch Webhook"" as the trigger type</li>
+<li>This will generate a unique URL that will receive HTTP requests and trigger your flow<br><img height=""488"" style=""height: auto; width: 451px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-29-34-0899-PM.png"" width=""451"" loading=""lazy""></li>
+</ul>
+</li>
+<li>Configure the email to use crew webhook body text<br><img height=""518"" style=""height: auto; width: 461px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image-png-Aug-08-2024-06-27-03-0131-PM.png"" width=""461"" loading=""lazy""></li>
+</ol>
+<h3>5. Generated output</h3>
+<p>1. <span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);""></span><code>stepWebhookUrl</code><span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">&nbsp;- Callback that will be executed upon each agent inner thought</span></p>
+<p>{""action"":""**Preliminary Research Report on the Financial Industry for crewai Enterprise Solution**\n\n**1. Industry Overview and Trends**\nThe financial industry in ....**Conclusion:**\nThe financial industry presents a fertile ground for implementing AI solutions like crewai, particularly in areas such as digital customer engagement, risk management, and regulatory compliance. Further engagement with the lead is recommended to better tailor the crewai solution to their specific needs and scale."",""task_id"":""97eba64f-958c-40a0-b61c-625fe635a3c0""}</p>
+<p>2. <span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);""></span><code>taskWebhookUrl</code><span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">&nbsp;- Callback that will be executed upon the end of each task</span></p>
+<p>{""description"":""Using the information gathered from the lead's data, conduct preliminary research on the lead's industry, company background, and potential use cases for crewai. Focus on finding relevant data that can aid in scoring the lead and planning a strategy to pitch them crewai.The financial industry presents a fertile ground for implementing AI solutions like crewai, particularly in areas such as digital customer engagement, risk management, and regulatory compliance. Further engagement with the lead is recommended to better tailor the crewai solution to their specific needs and scale."",""task_id"":""97eba64f-958c-40a0-b61c-625fe635a3c0""}</p>
+<p>3. <span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);""></span><code>crewWebhookUrl</code><span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">&nbsp;- Callback that will be executed upon the end of the crew execution</span></p>
+<p><span style=""background-color: transparent; color: var(--primary-body-font-color); font-family: var(--primary-body-font-family); font-size: var(--primary-body-font-size); font-style: var(--primary-body-font-style); font-weight: var(--primary-body-font-weight);"">{""task_id"":""97eba64f-958c-40a0-b61c-625fe635a3c0"",""result"":""{\n \""lead_score\"": Customer service enhancement, and compliance are particularly relevant.\"",\n \""talking_points\"": [\n \""Highlight how crewai's AI solutions can transform customer service with automated, personalized experiences and 24/7 support, improving both customer satisfaction and operational efficiency.\"",\n \""Discuss crewai's potential to help the institution achieve its sustainability goals through better data analysis and decision-making, contributing to responsible investing and green initiatives.\"",\n \""Emphasize crewai’s ability to enhance compliance with evolving regulations through efficient data processing and reporting, reducing the risk of non-compliance penalties.\"",\n \""Stress the adaptability of crewai to support both extensive multinational operations and smaller, targeted projects, ensuring the solution grows with the institution’s needs.\""\n ]\n}""}</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<br>
+<p>&nbsp;</p>
+<p>&nbsp;</p>",FAQs,
+How to use the crewai custom GPT to create a crew,,https://help.crewai.com/how-to-use-the-crewai-custom-gpt-to-create-a-crew,"<ol>
+<li>Navigate to the CrewAI custom GPT at <a href=""https://chatgpt.com/g/g-qqTuUWsBY-crewai-assistant"">https://chatgpt.com/g/g-qqTuUWsBY-crewai-assistant</a></li>
+<li>Describe your project idea. For example: ""suggest me some agents and tasks to retrieve LinkedIn profile details for a given person and a domain.""&nbsp;&nbsp;</li>
+<li>The GPT will provide you with a list of suggested agents and tasks. Here's an example<br><img alt=""brave_TDBJdoZ4QW"" height=""464"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_TDBJdoZ4QW.png"" width=""670"" loading=""lazy""></li>
+<li>Create the project structure in your terminal by entering:&nbsp;<br><code>crewai create linkedin-profile</code></li>
+<li><img alt=""Code_QJtysqixut"" height=""369"" style=""height: auto; max-width: 100%; width: 659px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Code_QJtysqixut.png"" width=""659"" loading=""lazy""></li>
+<li>&nbsp;Ask the GPT to convert the agents and tasks to YAML format.</li>
+<li><img alt=""brave_ykYFi5Hw9j"" height=""606"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/brave_ykYFi5Hw9j.png"" width=""670"" loading=""lazy""></li>
+<li>Now replace the agents.yaml and tasks.yaml with the above code</li>
+<li>Ask GPT to create the custom LinkedIn Tool</li>
+<li>Ask the GPT to put everything together into the crew,py</li>
+<li>You will now have a fully working crew.
+<div>
+<div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+</div>
+</div>
+</li>
+</ol>",FAQs,
+How to generate images using Dall-E,,https://help.crewai.com/how-to-generate-images-using-dall-e,"<h3 style=""text-align: center;"">Using the DALL-E Tool in crewAI</h3>
+<p style=""text-align: left;"">crewAI now supports integration with OpenAI's DALL-E, allowing your AI agents to generate images as part of their tasks. This guide will walk you through how to set up and use the DALL-E tool in your crewAI projects.<br><br><strong>Prerequisites</strong><br><br>- crewAI installed (latest version)<br>- OpenAI API key with access to DALL-E<br><br><strong>Setting Up the DALL-E Tool</strong><br><br>To use the DALL-E tool in your CrewAI project, follow these steps:<br><br>1. Import the DALL-E tool:<br><br>```python<br>from crewai_tools import DallETool<br>```<br><br>2. Add the DALL-E tool to your agent configuration:<br><br>```python<br>@agent<br>def researcher(self) -&gt; Agent:<br>&nbsp; &nbsp; return Agent(<br>&nbsp; &nbsp; &nbsp; &nbsp; config=self.agents_config['researcher'],<br>&nbsp; &nbsp; &nbsp; &nbsp; tools=[SerperDevTool(), <strong>DallETool()</strong>], &nbsp;# Add DallETool to the list of tools<br>&nbsp; &nbsp; &nbsp; &nbsp; allow_delegation=False,<br>&nbsp; &nbsp; &nbsp; &nbsp; verbose=True<br>&nbsp; &nbsp; )<br>```<br><br><strong>Using the DALL-E Tool</strong><br><br>Once you've added the DALL-E tool to your agent, it can generate images based on text prompts. The tool will return a URL to the generated image, which can be used in the agent's output or passed to other agents for further processing.<br><br>Example usage within a task:<br><br><strong>researcher</strong>:<br>&nbsp; <strong>role</strong>: &gt;<br>&nbsp; &nbsp; LinkedIn Profile Senior Data Researcher<br>&nbsp; <strong>goal</strong>: &gt;<br>&nbsp; &nbsp; Uncover detailed LinkedIn profiles based on provided name {name} and domain {domain}<br>&nbsp; &nbsp; Generate a Dall-e image based on domain {domain}<br>&nbsp; <strong>backstory</strong>: &gt;<br>&nbsp; &nbsp; You're a seasoned researcher with a knack for uncovering the most relevant LinkedIn profiles.<br>&nbsp; &nbsp; Known for your ability to navigate LinkedIn efficiently, you excel at gathering and presenting<br>&nbsp; &nbsp; professional information clearly and concisely.</p>
+<p style=""text-align: left;""><br><br>The agent with the DALL-E tool will be able to generate the image and provide a URL in its response. You can then download the image.</p>
+<p style=""text-align: left;""><img alt=""dalle"" height=""670"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/dalle.png"" width=""670"" loading=""lazy""><br><br><strong>Best Practices</strong><br><br>1. Be specific in your image generation prompts to get the best results.<br>2. Remember that image generation can take some time, so factor this into your task planning.<br>3. Always comply with OpenAI's usage policies when generating images.<br><br><strong>Troubleshooting</strong><br><br>If you encounter issues:<br><br>1. Ensure your OpenAI API key has access to DALL-E.<br>2. Check that you're using the latest version of crewAI and crewai-tools.<br>3. Verify that the DALL-E tool is correctly added to the agent's tool list.<br><br><br></p>",FAQs,
+How to use Annotations in crew.py,,https://help.crewai.com/how-to-use-annotations-in-crew.py,"<p>This guide explains how to use annotations to properly reference agents, tasks, and other components in the <code>crew.py</code>&nbsp;</p>
+<h4>Table of Contents</h4>
+<ol>
+<li>Introduction</li>
+<li>Available Annotations</li>
+<li>Usage Examples</li>
+<li>YAML Configuration</li>
+<li>Best Practices</li>
+</ol>
+<h4><strong>Introduction</strong></h4>
+<p>Annotations in the framework are used to decorate classes and methods, providing metadata and functionality to various components of your crew. These annotations help in organizing and structuring your code, making it more readable and maintainable.</p>
+<h4><strong>Available Annotations</strong></h4>
+<p>The framework provides the following annotations:</p>
+<ul>
+<li><code>@CrewBase</code>: Used to decorate the main crew class.</li>
+<li><code>@agent</code>: Decorates methods that define and return Agent objects.</li>
+<li><code>@task</code>: Decorates methods that define and return Task objects.</li>
+<li><code>@crew</code>: Decorates the method that creates and returns the Crew object.</li>
+<li><code>@llm</code>: Decorates methods that initialize and return Language Model objects.</li>
+<li><code>@tool</code>: Decorates methods that initialize and return Tool objects.</li>
+<li><code>@callback</code>: (Not shown in the example, but available) Used for defining callback methods.</li>
+<li><code>@output_json</code>: (Not shown in the example, but available) Used for methods that output JSON data.</li>
+<li><code>@output_pydantic</code>: (Not shown in the example, but available) Used for methods that output Pydantic models.</li>
+<li><code>@cache_handler</code>: (Not shown in the example, but available) Used for defining cache handling methods.</li>
+</ul>
+<h4><strong>Usage Examples</strong></h4>
+<p>Let's go through examples of how to use these annotations based on the provided <code>LinkedinProfileCrew</code> class:</p>
+<h3>1. Crew Base Class</h3>
+<div>
+<div>
+<div><code>@CrewBase<br>class LinkedinProfileCrew():<br>&nbsp; &nbsp; """"""LinkedinProfile crew""""""<br>&nbsp; &nbsp; agents_config = 'config/agents.yaml'<br>&nbsp; &nbsp; tasks_config = 'config/tasks.yaml'</code><code></code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>The <code>@CrewBase</code> annotation is used to decorate the main crew class. This class typically contains configurations and methods for creating agents, tasks, and the crew itself.</p>
+<h3>2. Tool Definition</h3>
+<div>
+<div>
+<div><code>@tool<br>def myLinkedInProfileTool(self):<br>&nbsp; &nbsp; return LinkedInProfileTool()</code><code></code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>The <code>@tool</code> annotation is used to decorate methods that return tool objects. These tools can be used by agents to perform specific tasks.</p>
+<h3>3. LLM Definition</h3>
+<div>
+<div>
+<div><code>@llm<br>def groq_llm(self):<br>&nbsp; &nbsp; api_key = os.getenv('api_key')<br>&nbsp; &nbsp; return ChatGroq(api_key=api_key, temperature=0, model_name=""mixtral-8x7b-&nbsp; &nbsp; 32768"")</code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>The <code>@llm</code> annotation is used to decorate methods that initialize and return Language Model objects. These LLMs are used by agents for natural language processing tasks.</p>
+<h3>4. Agent Definition</h3>
+<div>
+<div>
+<div>&nbsp;</div>
+</div>
+<div>
+<div><code>@agent<br>def researcher(self) -&gt; Agent:<br>&nbsp; &nbsp; return Agent(<br>&nbsp; &nbsp; &nbsp; &nbsp; config=self.agents_config['researcher']<br>    )</code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>The <code>@agent</code> annotation is used to decorate methods that define and return Agent objects.&nbsp;</p>
+<h3>5. Task Definition</h3>
+<div>
+<div>
+<div><code>@task<br>def research_task(self) -&gt; Task:<br>&nbsp; &nbsp; return Task(<br>&nbsp; &nbsp; &nbsp; &nbsp; config=self.tasks_config['research_linkedin_task'],<br>&nbsp; &nbsp; &nbsp; &nbsp; agent=self.researcher()<br>    )</code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>The <code>@task</code> annotation is used to decorate methods that define and return Task objects. These methods specify the task configuration and the agent responsible for the task.</p>
+<h3>6. Crew Creation</h3>
+<div>
+<div>
+<div><code>@crew<br>def crew(self) -&gt; Crew:<br>&nbsp; &nbsp; """"""Creates the LinkedinProfile crew""""""<br>&nbsp; &nbsp; return Crew(<br>&nbsp; &nbsp; &nbsp; &nbsp; agents=self.agents, <br>&nbsp; &nbsp; &nbsp; &nbsp; tasks=self.tasks, <br>&nbsp; &nbsp; &nbsp; &nbsp; process=Process.sequential,<br>&nbsp; &nbsp; &nbsp; &nbsp; verbose=True<br>    )</code><code></code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>The <code>@crew</code> annotation is used to decorate the method that creates and returns the Crew object. This method assembles all the components (agents and tasks) into a functional crew.</p>
+<h4><strong>YAML Configuration</strong></h4>
+<p>The agent configurations are typically stored in a YAML file. Here's an example of how the <code>agents.yaml</code> file might look for the researcher agent:</p>
+<div>
+<div>
+<div><code>researcher:<br>&nbsp; role: &gt;<br>&nbsp; &nbsp; LinkedIn Profile Senior Data Researcher<br>&nbsp; goal: &gt;<br>&nbsp; &nbsp; Uncover detailed LinkedIn profiles based on provided name {name} and domain {domain}<br>&nbsp; &nbsp; Generate a Dall-E image based on domain {domain}<br>&nbsp; backstory: &gt;<br>&nbsp; &nbsp; You're a seasoned researcher with a knack for uncovering the most relevant&nbsp; &nbsp; &nbsp; LinkedIn profiles.<br>&nbsp; &nbsp; Known for your ability to navigate LinkedIn efficiently, you excel at&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; gathering and presenting<br>&nbsp; &nbsp; professional information clearly and concisely.<br>&nbsp; allow_delegation: False<br>&nbsp; verbose: True<br>&nbsp; llm: groq_llm<br>&nbsp; tools: <br>&nbsp; &nbsp; - myLinkedInProfileTool<br>&nbsp; &nbsp; - mySerperDevTool<br>&nbsp; &nbsp; - myDallETool</code></div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>This YAML configuration corresponds to the <code>researcher</code> agent defined in the <code>LinkedinProfileCrew</code> class. The configuration specifies the agent's role, goal, backstory, and other properties such as the LLM and tools it uses.</p>
+<p>Note how the <code>llm</code> and <code>tools</code> in the YAML file correspond to the methods decorated with <code>@llm</code> and <code>@tool</code> in the Python class. This connection allows for a flexible and modular design where you can easily update agent configurations without changing the core code.</p>
+<h4><strong>Best Practices</strong></h4>
+<ol>
+<li><strong>Consistent Naming</strong>: Use clear and consistent naming conventions for your methods. For example, agent methods could be named after their roles (e.g., <code>researcher</code>, <code>reporting_analyst</code>).</li>
+<li><strong>Environment Variables</strong>: Use environment variables for sensitive information like API keys.</li>
+<li><strong>Flexibility</strong>: Design your crew to be flexible by allowing easy addition or removal of agents and tasks.</li>
+<li><strong>YAML-Code Correspondence</strong>: Ensure that the names and structures in your YAML files correspond correctly to the decorated methods in your Python code.</li>
+</ol>
+<p>By following these guidelines and properly using annotations, you can create well-structured and maintainable crews using the Crew AI framework.</p>",FAQs,
+How to Integrate CrewAI+ with Zapier,,https://help.crewai.com/how-to-integrate-crewai-with-zapier,"<p>This guide will walk you through the process of integrating CrewAI+ with Zapier, allowing you to automate workflows between CrewAI+ and other applications.<br><br><strong>Prerequisites</strong><br>- A CrewAI+ account<br>- A Zapier account<br>- A Slack account (for this specific integration)<br><br><strong>Step-by-Step Guide</strong><br><br><strong>1. Set Up the Slack Trigger</strong><br><br>1. In Zapier, create a new Zap.</p>
+<p><img alt=""msedge_0r5pxEa28j"" height=""463"" style=""height: auto; max-width: 100%; width: 621px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_0r5pxEa28j.png"" width=""621"" loading=""lazy""><br>2. Choose Slack as your trigger app.</p>
+<p><img alt=""msedge_7jfB6v1e9f"" height=""684"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_7jfB6v1e9f.png"" width=""670"" loading=""lazy""><br>3. Select ""New Pushed Message"" as the Trigger Event.<br>4. Connect your Slack account if you haven't already.<br><br><strong>2. Configure the CrewAI+ Action</strong><br><br>1. Add a new action step to your Zap.<br>2. Choose CrewAI+ as your action app and Kickoff as the Action Event</p>
+<p><img alt=""msedge_Dxq9WM4fWT-1"" height=""671"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_Dxq9WM4fWT-1.png"" width=""670"" loading=""lazy""><br>3. Connect your CrewAI+ account.<br>4. Select the appropriate Crew for your workflow.</p>
+<p><img alt=""msedge_0u2sRKXDdA"" height=""657"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_0u2sRKXDdA.png"" width=""670"" loading=""lazy""><br>5. Configure the inputs for the Crew using the data from the Slack message.<br><br><strong>3. Format the CrewAI+ Output</strong><br><br>1. Add another action step to format the text output from CrewAI+.<br>2. Use Zapier's formatting tools to convert the Markdown output to HTML.</p>
+<p><img alt=""msedge_eFEtWnH9Cj"" height=""675"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_eFEtWnH9Cj.png"" width=""670"" loading=""lazy""></p>
+<p><img alt=""msedge_LuHKtHJlkh"" height=""676"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_LuHKtHJlkh.png"" width=""670"" loading=""lazy""><br><br><strong>4. Send the Output via Email</strong><br><br>1. Add a final action step to send the formatted output via email.<br>2. Choose your preferred email service (e.g., Gmail, Outlook).<br>3. Configure the email details, including recipient, subject, and body.<br>4. Insert the formatted CrewAI+ output into the email body.</p>
+<p><img alt=""msedge_s16GTkczG7"" height=""674"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/msedge_s16GTkczG7.png"" width=""670"" loading=""lazy""></p>
+<p><strong>5. Kick Off the crew from Slack</strong><br><br>1. Enter the text in your Slack channel</p>
+<p><img alt=""slack_jlKHSix6IP"" height=""85"" style=""height: auto; max-width: 100%; width: 509px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/slack_jlKHSix6IP.png"" width=""509"" loading=""lazy""></p>
+<p>2. Select the 3 ellipsis button and then chose Push to Zapier</p>
+<p><img alt=""slack_dIidsPnait"" height=""260"" style=""height: auto; max-width: 100%; width: 405px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/slack_dIidsPnait.png"" width=""405"" loading=""lazy""></p>
+<p>3. Select the crew and then Push to Kick Off</p>
+<p><img alt=""slack_v3cTbYZhXe"" height=""531"" style=""height: auto; max-width: 100%; width: 659px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/slack_v3cTbYZhXe.png"" width=""659"" loading=""lazy""></p>
+<p><br><strong>Tips for Success</strong><br><br>- Ensure that your CrewAI+ inputs are correctly mapped from the Slack message.<br>- Test your Zap thoroughly before turning it on to catch any potential issues.<br>- Consider adding error handling steps to manage potential failures in the workflow.<br><br>By following these steps, you'll have successfully integrated CrewAI+ with Zapier, allowing for automated workflows triggered by Slack messages and resulting in email notifications with CrewAI+ output.</p>",FAQs,
+How to Integrate CrewAI+ with HubSpot,,https://help.crewai.com/how-to-integrate-crewai-with-hubspot,"<div>
+<p dir=""auto"">This guide provides a step-by-step process to integrate&nbsp;CrewAI+&nbsp;with&nbsp;HubSpot, enabling you to initiate crews directly from HubSpot Workflows.</p>
+</div>
+<div>
+<h3>Prerequisites</h3>
+</div>
+<div>
+<ul>
+<li dir=""auto"" data-line=""0"">A CrewAI+ account</li>
+<li dir=""auto"" data-line=""1"">A HubSpot account with the&nbsp;<a href=""https://knowledge.hubspot.com/workflows/create-workflows"" target=""_blank"" rel=""noopener"" data-tooltip-position=""top"" aria-label=""https://knowledge.hubspot.com/workflows/create-workflows"">HubSpot Workflows</a>&nbsp;feature</li>
+</ul>
+</div>
+<div>
+<h3>Step-by-Step Guide</h3>
+</div>
+<div>
+<p dir=""auto""><strong>1. Connect your HubSpot account with CrewAI+</strong></p>
+</div>
+<div>
+<ul>
+<li dir=""auto"" data-line=""0"">Log in to your&nbsp;CrewAI+&nbsp;account &gt; Integrations</li>
+<li dir=""auto"" data-line=""1"">Select&nbsp;HubSpot&nbsp;from the list of available integrations</li>
+<li dir=""auto"" data-line=""2"">Choose the HubSpot account you want to integrate with CrewAI+</li>
+<li dir=""auto"" data-line=""3"">Follow the on-screen prompts to authorize CrewAI+ access to your HubSpot account</li>
+<li dir=""auto"" data-line=""4"">A confirmation message will appear once HubSpot is successfully linked with CrewAI+</li>
+</ul>
+</div>
+<div>
+<p dir=""auto""><strong>2. Create a HubSpot Workflow</strong></p>
+</div>
+<div>
+<ul>
+<li dir=""auto"" data-line=""0"">Log in to your&nbsp;HubSpot&nbsp;account &gt; Automations &gt; Workflows &gt; New workflow</li>
+<li dir=""auto"" data-line=""1"">Select the workflow type that fits your needs (e.g.,&nbsp;Start from scratch)</li>
+<li dir=""auto"" data-line=""2"">In the workflow builder, click the&nbsp;Plus (+)&nbsp;icon to add a new action.</li>
+<li data-line=""3"">Choose Integrated apps &gt; CrewAI &gt; Kickoff a Crew.<br><img alt=""action"" height=""557"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/action.png"" width=""670"" loading=""lazy""></li>
+<li dir=""auto"" data-line=""5"">Select the Crew you want to initiate.</li>
+<li dir=""auto"" data-line=""6"">Click&nbsp;Save&nbsp;to add the action to your workflow</li>
+</ul>
+</div>
+<div>
+<p dir=""auto""><strong>3. (Optional) Use Crew results with other actions</strong></p>
+</div>
+<div>
+<ul>
+<li dir=""auto"" data-line=""0"">After the&nbsp;Kickoff a Crew&nbsp;step, click the&nbsp;Plus (+)&nbsp;icon to add a new action.</li>
+<li dir=""auto"" data-line=""1"">For example, to send an internal email notification, choose&nbsp;Communications&nbsp;&gt;&nbsp;Send internal email notification</li>
+<li data-line=""2"">In the&nbsp;Body&nbsp;field, click&nbsp;Insert data, select&nbsp;View properties or action outputs from&nbsp;&gt;&nbsp;Action outputs&nbsp;&gt;&nbsp;Crew Result&nbsp;to include Crew data in the email<br><img alt=""results"" height=""438"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/results.png"" width=""670"" loading=""lazy""></li>
+<li dir=""auto"" data-line=""4"">Configure any additional actions as needed</li>
+<li dir=""auto"" data-line=""5"">Review your workflow steps to ensure everything is set up correctly</li>
+<li dir=""auto"" data-line=""6"">Activate the workflow</li>
+</ul>
+</div>
+<div>&nbsp;<img alt=""email"" height=""648"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/email.png"" width=""670"" loading=""lazy""><br><br></div>
+<div>
+<p>For more detailed information on available actions and customization options, refer to the&nbsp;<a href=""https://knowledge.hubspot.com/workflows/create-workflows"" target=""_blank"" rel=""noopener"" data-tooltip-position=""top"" aria-label=""https://knowledge.hubspot.com/workflows/create-workflows"">HubSpot Workflows Documentation</a>.</p>
+</div>",FAQs,"crewai+,hubspot"
+How to connect Azure OpenAI with Crew Studio?,"
+",https://help.crewai.com/how-to-connect-azure-openai-with-crew-studio,"<ol>
+<li>In Azure, go to <strong>Azure AI Services</strong> &gt; select your deployment &gt; open <strong>Azure OpenAI Studio</strong>.</li>
+<li>On the left menu, click <strong>Deployments</strong>. If you don’t have one, create a deployment with your desired model.</li>
+<li>Once created, select your deployment and locate the <strong>Target URI</strong> and <strong>Key</strong> on the right side of the page. Keep this page open, as you’ll need this information.<br><img alt=""image.psd"" height=""503"" style=""height: auto; max-width: 100%; width: 670px;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/image.psd.png"" width=""670"" loading=""lazy""></li>
+<li>In another tab, open <strong>CrewAI Enterprise &gt; LLM Connections</strong>. Name your LLM Connection, select Azure as the provider, and choose the same model you selected in Azure.</li>
+<li>On the same page, add environment variables from step 3:
+<ul>
+<li>One named <code>AZURE_DEPLOYMENT_TARGET_URL</code> (using the Target URI). The URL should look like this: <code>https://your-deployment.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview</code></li>
+<li>Another named <code>AZURE_API_KEY</code> (using the Key).</li>
+</ul>
+</li>
+<li>Click <strong>Add Connection</strong> to save your LLM Connection.</li>
+<li>In <strong>CrewAI Enterprise &gt; Settings &gt; Defaults &gt; Crew Studio LLM Settings</strong>, set the new LLM Connection and model as defaults.</li>
+<li><strong>Ensure network access settings</strong>:
+<ul>
+<li>In Azure, go to <strong>Azure OpenAI</strong> &gt; select your deployment.</li>
+<li>Navigate to <strong>Resource Management &gt; Networking</strong>.</li>
+<li>Ensure that <strong>Allow access from all networks</strong> is enabled. If this setting is restricted, CrewAI may be blocked from accessing your Azure OpenAI endpoint.</li>
+</ul>
+</li>
+</ol>
+<p>You're all set! Crew Studio will now use your Azure OpenAI connection.</p>",FAQs,
+What question is your article answering?,,https://help.crewai.com/-temporary-slug-7ce3eed3-fb00-42f2-9303-13f95a48ac59,,,
+How to enable Crew Studio for your account,,https://help.crewai.com/how-to-enable-crew-studio-for-your-account,"<p>Crew Studio is an amazing way to scaffold your Crews or even build some of them (for now the less complex ones) end-to-end with no-code. We use it every day! Crew Studio allows you to chat with our <strong>Crew Assistant</strong> and describe the problem that you are trying to solve with a Crew. It will generate the agents and tasks, select tools and suggest the inputs based on the provided information. After you generate the flow, you can download the code to connect it to custom APIs and later deploy to the platform!</p>
+<br>
+<p>That being said there are a few things that you need to configure first!</p>
+<br>
+<ol>
+<li aria-level=""1"">Go to <a href=""https://app.crewai.com/crewai_plus/llm_connections"">LLM Connections</a> tab</li>
+<li aria-level=""1"">Create a new LLM connection, currently Studio supports only OpenAI models, but we are working on expanding it with other models soon!
+<ol>
+<li aria-level=""2"">Enter “Connection Name”, eg. <em>OpenAI</em></li>
+<li aria-level=""2"">Select your model provider: openai or azure</li>
+<li aria-level=""2"">Select models you’d like to use in your Crews generated by the Studio. We suggest at least gpt-4o, o1-mini and gpt-4o-mini</li>
+<li aria-level=""2"">In the Environment Variables section add a variable called OPENAI_API_KEY and provide your API key. If you want to configure Azure OpenAI, refer to <a href=""https://help.crewai.com/how-to-connect-azure-openai-with-crew-studio"">this article</a>.</li>
+<li aria-level=""2"">The configuration should look something like on the screenshot below. Click “Add Connection”</li>
+</ol>
+</li>
+</ol>
+<p><img height=""309"" style=""width: 670px; height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Rich%20Text%20Pasting/google-1734357388455-1.png"" width=""670"" loading=""lazy""></p>
+<br><br><br>
+<ol>
+<li aria-level=""1"">Once you do that you’ll see your connection added to the list</li>
+</ol>
+<p><img height=""34"" style=""width: 670px; height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Rich%20Text%20Pasting/google-1734357388455.png"" width=""670"" loading=""lazy""></p>
+<br><br><br>
+<ol>
+<li aria-level=""1"">Now, in the Menu go to <a href=""https://app.crewai.com/crewai_plus/settings/defaults"">Settings → Defaults</a> and configure the LLM Defaults. We recommend the following configuration. Click Save Settings.</li>
+</ol>
+<p><img height=""143"" style=""width: 670px; height: auto;"" src=""https://45732688.fs1.hubspotusercontent-na1.net/hubfs/45732688/Rich%20Text%20Pasting/google-1734357388456.png"" width=""670"" loading=""lazy""></p>
+<br><br>
+<p>You’re good to go! Now you can start using <a href=""https://app.crewai.com/crewai_plus/ui_studio"">Studio</a>!</p>",Getting started,
