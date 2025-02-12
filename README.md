@@ -103,6 +103,7 @@ The first message sends the following JSON payload to the `/kickoff` endpoint:
 {
     "current_message": "Hello, I am a chatbot. How can I help you today?"
 }
+```
 
 In response, the API will respond with a `kickoff_id`:
 
