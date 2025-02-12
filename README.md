@@ -118,7 +118,7 @@ In order to get the chatbot response, keep polling the `/status/{kickoff_id}` en
 ```json
 {
     "state": "SUCCESS",
-    "result": '{ "response": "Assistant response here.", "id": "UNIQUE-CONVERSATION-ID" }'
+    "result": "{ \"response\": \"Assistant response here.\", \"id\": \"UNIQUE-CONVERSATION-ID\" }"
 }
 ```
 
