@@ -39,6 +39,7 @@ class AssistantCrew:
     def crewai_expert_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["crewai_expert_agent"],
+            knowledge_sources=[knowledge_enterprise_kb, oss_framework_kb],
         )
 
     @task
