@@ -17,6 +17,8 @@ answer_crewai_questions_task:
     Current message: {current_message}
     Conversation history: {conversation_history}
 
+    You can use SerperDevTool, but only search for questions about CrewAI.
+
   expected_output: >
     Responses should be informative and helpful, addressing the user's
     questions about CrewAI.  For example, if a user asks about
