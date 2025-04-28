@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.10, <3.13"
 resolution-markers = [
     "python_full_version < '3.11'",
@@ -515,12 +516,12 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "colorama", specifier = ">=0.4.6" },
-    { name = "crewai", extras = ["tools"], specifier = ">=0.102.0,<1.0.0" },
+    { name = "crewai", extras = ["tools"], specifier = ">=0.117.1,<1.0.0" },
 ]
 
 [[package]]
 name = "crewai"
-version = "0.114.0"
+version = "0.117.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "appdirs" },
@@ -547,9 +548,8 @@ dependencies = [
     { name = "tomli-w" },
     { name = "uv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/66/23/1ae65357a94d788e1fa5a9140d1c5990e130f7bb60ea93e5bb9dbbc41c2c/crewai-0.114.0.tar.gz", hash = "sha256:b2f79693088088b3c1722abecc39a1535115f468d3ce1aa29dcf56cce3ff2968", size = 40529462 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/80/a9/18597cd8075124f1e903e5c6070c6397477d25e88f787014c712cd3e1c45/crewai-0.114.0-py3-none-any.whl", hash = "sha256:590cf6afe7d95ac1d482c4fa9033a29e0a9cb567daae4187f25c1cbb1c20af14", size = 285500 },
+    { url = "https://files.pythonhosted.org/packages/aa/0c/16fd50d769f8322331ec9c3028c83e2bd4becaebb5a4c697b093df8920c3/crewai-0.117.1-py3-none-any.whl", hash = "sha256:edd44e7e284b46b6146db2576d53febfc8e3fd55fb086a86b2c3c443d6314752", size = 300188 },
 ]
 
 [package.optional-dependencies]
@@ -559,7 +559,7 @@ tools = [
 
 [[package]]
 name = "crewai-tools"
-version = "0.40.1"
+version = "0.42.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "chromadb" },
@@ -574,9 +574,9 @@ dependencies = [
     { name = "pytube" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/16/ff/0c16c9943ec1501b12fc72aca7815f191ffe94d5f1fe4e9c353ee8c4ad1d/crewai_tools-0.40.1.tar.gz", hash = "sha256:6af5040b2277df8fd592238a17bf584f95dcc9ef7766236534999c8a9e9d0b52", size = 744094 }
+sdist = { url = "https://files.pythonhosted.org/packages/17/34/9e63e2db53d8f5c30353f271a3240687a48e55204bbd176a057c0b7658c8/crewai_tools-0.42.2.tar.gz", hash = "sha256:69365ffb168cccfea970e09b308905aa5007cfec60024d731ffac1362a0153c0", size = 754967 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/35/05/619c00bae2dda038f0d218dd5197120c938e9c9ccef1b9e50cfb037486f6/crewai_tools-0.40.1-py3-none-any.whl", hash = "sha256:8f459f74dee64364bfdbc524c815c4afcfb9ed532b51e6b8b4f616398d46cf1e", size = 573286 },
+    { url = "https://files.pythonhosted.org/packages/4e/43/0f70b95350084e5cb1e1d74e9acb9e18a89ba675b1d579c787c2662baba7/crewai_tools-0.42.2-py3-none-any.whl", hash = "sha256:13727fb68f0efefd21edeb281be3d66ff2f5a3b5029d4e6adef388b11fd5846a", size = 583933 },
 ]
 
 [[package]]
@@ -1760,7 +1760,7 @@ wheels = [
 
 [[package]]
 name = "litellm"
-version = "1.60.2"
+version = "1.67.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -1775,9 +1775,9 @@ dependencies = [
     { name = "tiktoken" },
     { name = "tokenizers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/94/8f/704cdb0fdbdd49dc5062a39ae5f1a8f308ae0ffd746df6e0137fc1776b8a/litellm-1.60.2.tar.gz", hash = "sha256:a8170584fcfd6f5175201d869e61ccd8a40ffe3264fc5e53c5b805ddf8a6e05a", size = 6447447 }
+sdist = { url = "https://files.pythonhosted.org/packages/a7/61/b974067af7908f19a0391ebda0ebfdff376eb9314c28578a9e60b0b381a7/litellm-1.67.2.tar.gz", hash = "sha256:9e108827bff16af04fd4c35b0c1a1d6c7746c96db3870189a60141d449797487", size = 7257152 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8a/ba/0eaec9aee9f99fdf46ef1c0bddcfe7f5720b182f84f6ed27f13145d5ded2/litellm-1.60.2-py3-none-any.whl", hash = "sha256:1cb08cda04bf8c5ef3e690171a779979e4b16a5e3a24cd8dc1f198e7f198d5c4", size = 6746809 },
+    { url = "https://files.pythonhosted.org/packages/c2/7f/1a7750bf49ff096ec8d924059a1daea7d98dc065a13294a849178a678c02/litellm-1.67.2-py3-none-any.whl", hash = "sha256:32df4d17b3ead17d04793311858965e41e83a7bdf9bd661895c0e6bc9c78dc8b", size = 7626920 },
 ]
 
 [[package]]
