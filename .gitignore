@@ -2,3 +2,4 @@
 __pycache__/
 lib/
 **/secrets.toml
+.DS_Store

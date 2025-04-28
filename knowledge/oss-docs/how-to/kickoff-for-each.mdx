@@ -1,3 +1,5 @@
+Documentation page URL: https://docs.crewai.com/how-to/kickoff-for-each
+
 ---
 title: Kickoff Crew for Each
 description: Kickoff Crew for Each Item in a List
@@ -39,8 +41,7 @@ analysis_crew = Crew(
     agents=[coding_agent],
     tasks=[data_analysis_task],
     verbose=True,
-    memory=False,
-    respect_context_window=True  # enable by default
+    memory=False
 )
 
 datasets = [

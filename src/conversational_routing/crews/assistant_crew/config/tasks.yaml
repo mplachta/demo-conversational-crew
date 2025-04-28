@@ -24,12 +24,14 @@ answer_crewai_questions_task:
     "To create a new agent in CrewAI, you'll typically define its role,
     goal, and backstory in a YAML configuration file.  Here's an
     example:
+
     ```yaml
     my_agent:
       role: My Agent
       goal: Perform a specific task
       backstory: I am an agent designed to...
     ```
+
     You would then use the CrewAI API or CLI to register this agent.
     There are different ways to define the agent's behavior, such as
     using Python functions or integrating with external services.
@@ -37,8 +39,10 @@ answer_crewai_questions_task:
     You can also define tasks for your agent to perform.  These tasks
     specify the actions the agent should take and the expected output.
     For more detailed information, please refer to the CrewAI
-    documentation: [link to documentation]."  Another example: "CrewAI
-    supports different ways to define the agent's behavior. You can use
+    documentation: [link to documentation]." 
+    
+    Another example: 
+    "CrewAI supports different ways to define the agent's behavior. You can use
     Python functions, integrate with external APIs, or even use
     pre-trained models. The choice depends on the complexity of your
     agent and the specific task it needs to perform.  For example, if
