@@ -4,16 +4,20 @@ from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 from crewai.knowledge.knowledge_config import KnowledgeConfig
+from pathlib import Path
 
 # Define base path to current file
-knowledge_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../knowledge"))
+knowledge_base_path = Path(__file__).parent / "knowledge"
 
 # Prepare the knowledge base for the OSS Framework
 files = glob.glob(os.path.join(knowledge_base_path, "oss-docs/**/*.mdx"), recursive=True)
-files = [os.path.relpath(file, knowledge_base_path) for file in files]
+# Convert file strings to Path objects
+file_paths = [Path(file) for file in files]
+
+print("file_paths", file_paths)
 
 oss_framework_kb = TextFileKnowledgeSource(
-    file_paths=files,
+    file_paths=file_paths,
     metadata={
         "category": "CrewAI",
     },
