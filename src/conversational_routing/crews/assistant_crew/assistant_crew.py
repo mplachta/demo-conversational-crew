@@ -1,8 +1,9 @@
 import os
 import glob
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
+from crewai.knowledge.knowledge_config import KnowledgeConfig
 
 # Define base path to current file
 knowledge_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../knowledge"))
@@ -18,6 +19,11 @@ oss_framework_kb = TextFileKnowledgeSource(
     },
 )
 
+llm = LLM(
+    model="gpt-4o",
+    temperature=0.1,
+)
+
 @CrewBase
 class AssistantCrew:
     """Assistant Crew"""
@@ -30,6 +36,8 @@ class AssistantCrew:
         return Agent(
             config=self.agents_config["crewai_expert_agent"],
             knowledge_sources=[oss_framework_kb],
+            knowledge_config=KnowledgeConfig(results_limit=5, score_threshold=0.7),
+            llm=llm,
         )
 
     @task
@@ -45,5 +53,6 @@ class AssistantCrew:
             agents=self.agents,  # Automatically created by the @agent decorator
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
-            verbose=True,
+            verbose=False,
+            memory=True,
         )

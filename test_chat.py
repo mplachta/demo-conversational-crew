@@ -18,7 +18,7 @@ print(f"\n{Fore.BLUE}{Style.BRIGHT}Question #2{Style.RESET_ALL}")
 
 chat_flow = ChatFlow()
 response = chat_flow.kickoff(inputs={
-    "current_message": "How to set up OpenAI connection?",
+    "current_message": "How to set up Azure OpenAI connection?",
     "id": id
 })
 
