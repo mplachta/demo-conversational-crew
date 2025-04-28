@@ -25,11 +25,15 @@ class AssistantCrew:
         # Knowledge Configuration
         # Define base path to current file
         knowledge_base_path = Path(__file__).parent / "knowledge"
+        print("Knowledge base path (lorenze):", knowledge_base_path)
 
         # Prepare the knowledge base for the OSS Framework
         files = glob.glob(os.path.join(knowledge_base_path, "oss-docs/**/*.mdx"), recursive=True)
+        print("Files (lorenze):", files)
         # Convert file strings to Path objects
         knowledge_file_paths = [Path(file) for file in files]
+
+        print("Knowledge paths (lorenze):", knowledge_file_paths)
 
         return Agent(
             config=self.agents_config["crewai_expert_agent"],
