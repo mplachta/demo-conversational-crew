@@ -7,6 +7,7 @@ requires-python = ">=3.10,<3.13"
 dependencies = [
     "colorama>=0.4.6",
     "crewai[tools]>=0.117.1,<1.0.0",
+    "streamlit>=1.44.1",
 ]
 
 [project.scripts]
