@@ -1,52 +1,12 @@
 answer_crewai_questions_task:
   agent: crewai_expert_agent
   description: >
-    Respond to user questions about the CrewAI framework. Provide
-    accurate and detailed information about its features,
-    architecture, usage, and best practices. Explain concepts clearly
-    and offer practical examples.  Address user queries regarding agent
-    creation, task definition, workflow management, and integration
-    with other tools.  Offer guidance on troubleshooting common
-    issues and optimizing CrewAI implementations. Provide links to
-    relevant documentation, tutorials, and community resources.
-    Ensure responses are comprehensive, informative, and tailored to
-    the user's specific needs.  Offer alternative approaches and
-    solutions when applicable.  Maintain a friendly and helpful tone
-    throughout the interaction.
+    Respond to user questions about the CrewAI framework.
 
     Current message: {current_message}
     Conversation history: {conversation_history}
-
   expected_output: >
-    Responses should be informative and helpful, addressing the user's
-    questions about CrewAI.  For example, if a user asks about
-    creating a new agent, the response might include:
-    "To create a new agent in CrewAI, you'll typically define its role,
-    goal, and backstory in a YAML configuration file.  Here's an
-    example:
-
-    ```yaml
-    my_agent:
-      role: My Agent
-      goal: Perform a specific task
-      backstory: I am an agent designed to...
-    ```
-
-    You would then use the CrewAI API or CLI to register this agent.
-    There are different ways to define the agent's behavior, such as
-    using Python functions or integrating with external services.
-    CrewAI provides flexibility in how you implement your agent's logic.
-    You can also define tasks for your agent to perform.  These tasks
-    specify the actions the agent should take and the expected output.
-    For more detailed information, please refer to the CrewAI
-    documentation: [link to documentation]." 
-    
-    Another example: 
-    "CrewAI supports different ways to define the agent's behavior. You can use
-    Python functions, integrate with external APIs, or even use
-    pre-trained models. The choice depends on the complexity of your
-    agent and the specific task it needs to perform.  For example, if
-    your agent needs to perform natural language processing, you might
-    integrate with a library like Transformers.  If it needs to interact
-    with a database, you might use a database connector. CrewAI
-    provides the flexibility to adapt to different scenarios."
+    Responses should be informative and helpful, addressing the user's questions about CrewAI.
+    If required:
+    - Provide links to relevant documentation
+    - Offer practical examples
