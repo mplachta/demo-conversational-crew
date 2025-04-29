@@ -16,7 +16,7 @@ class AssistantCrew:
 
     # LLM Configuration
     llm = LLM(
-        model="gpt-4o",
+        model="groq/meta-llama/llama-4-scout-17b-16e-instruct",
         temperature=0.1,
     )
 

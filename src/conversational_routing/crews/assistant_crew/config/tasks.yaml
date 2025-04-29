@@ -6,6 +6,8 @@ answer_crewai_questions_task:
     Current message: {current_message}
     Conversation history: {conversation_history}
   expected_output: >
+    Response should be less than 1000 characters unless there is a code example.
+
     Responses should be informative and helpful, addressing the user's questions about CrewAI.
     If required:
     - Provide links to relevant documentation
