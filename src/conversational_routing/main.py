@@ -11,6 +11,9 @@ class ChatState(BaseModel):
     current_message: str = ""
     conversation_history: List[dict] = []
 
+    class_content: List[str] = []
+    classes_count: int = 10
+
 @persist()
 class ChatFlow(Flow[ChatState]):
     @start()

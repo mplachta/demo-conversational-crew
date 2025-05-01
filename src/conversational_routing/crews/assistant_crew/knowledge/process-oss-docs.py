@@ -9,7 +9,7 @@ for file_path in mdx_files:
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
-            url = "Documentation page URL: " + file_path.replace("oss-docs/", "https://docs.crewai.com/").replace(".mdx", "")
+            url = "URL: " + file_path.replace("oss-docs/", "https://docs.crewai.com/").replace(".mdx", "")
 
             with open(file_path, 'w', encoding='utf-8') as outfile:
                 outfile.write(f"{url}\n\n{content}")

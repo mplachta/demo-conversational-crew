@@ -17,29 +17,46 @@ class AssistantCrew:
     # LLM Configuration
     llm = LLM(
         model="groq/meta-llama/llama-4-scout-17b-16e-instruct",
-        temperature=0.1,
+        temperature=0.2,
     )
 
-    @agent
-    def crewai_expert_agent(self) -> Agent:
+    knowledge_sources = []
+
+    def __init__(self):
+        self.knowledge_files = []
+
         # Knowledge Configuration
         # Define base path to current file
         knowledge_base_path = Path(__file__).parent / "knowledge"
 
         # Prepare the knowledge base for the OSS Framework
         files = glob.glob(os.path.join(knowledge_base_path, "oss-docs/**/*.mdx"), recursive=True)
-        # Convert file strings to Path objects
-        knowledge_file_paths = [Path(file) for file in files]
 
+        for file in files:
+            url = ""
+            first_line = open(file).readline()
+            if "URL:" in first_line:
+                url = first_line.replace("URL:", "").strip()
+            
+            file_path = Path(file)
+            category = file_path.parent.name
+            # print(file_path)
+            
+            knowledge_source = TextFileKnowledgeSource(
+                file_paths=[file_path],
+                metadata={
+                    "url": url,
+                    "category": category,
+                },
+            )
+            self.knowledge_sources.append(knowledge_source)
+
+    @agent
+    def crewai_expert_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["crewai_expert_agent"],
-            knowledge_sources=[TextFileKnowledgeSource(
-                file_paths=knowledge_file_paths,
-                metadata={
-                    "category": "CrewAI",
-                },
-            )],
-            knowledge_config=KnowledgeConfig(results_limit=5, score_threshold=0.7),
+            knowledge_sources=self.knowledge_sources,
+            knowledge_config=KnowledgeConfig(results_limit=5),
             llm=self.llm,
         )
 
