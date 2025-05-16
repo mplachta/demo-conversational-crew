@@ -11,9 +11,6 @@ class ChatState(BaseModel):
     current_message: str = ""
     conversation_history: List[dict] = []
 
-    class_content: List[str] = []
-    classes_count: int = 10
-
 @persist()
 class ChatFlow(Flow[ChatState]):
     @start()
@@ -36,7 +33,9 @@ class ChatFlow(Flow[ChatState]):
     
 def kickoff():
     chat_flow = ChatFlow()
-    chat_flow.kickoff(inputs={})
+    chat_flow.kickoff(inputs={
+        "current_message": "How to define an agent?",
+    })
 
 def plot():
     chat_flow = ChatFlow()
