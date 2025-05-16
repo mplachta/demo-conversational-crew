@@ -1,7 +1,7 @@
 answer_crewai_questions_task:
   agent: crewai_expert_agent
   description: >
-    Respond to user questions about the CrewAI framework.
+    Respond to user message:
 
     Current message: {current_message}
     Conversation history: {conversation_history}

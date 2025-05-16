@@ -33,7 +33,9 @@ class ChatFlow(Flow[ChatState]):
     
 def kickoff():
     chat_flow = ChatFlow()
-    chat_flow.kickoff(inputs={})
+    chat_flow.kickoff(inputs={
+        "current_message": "How to define an agent?",
+    })
 
 def plot():
     chat_flow = ChatFlow()
