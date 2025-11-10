@@ -5,7 +5,7 @@ import json
 
 from crewai.flow import Flow, start, persist
 
-from src.conversational_routing.crews.assistant_crew.assistant_crew import AssistantCrew
+from conversational_routing.crews.assistant_crew.assistant_crew import AssistantCrew
 
 class ChatState(BaseModel):
     current_message: str = ""
