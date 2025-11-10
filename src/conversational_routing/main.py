@@ -9,7 +9,7 @@ from src.conversational_routing.crews.assistant_crew.assistant_crew import Assis
 
 class ChatState(BaseModel):
     current_message: str = ""
-    conversation_history: List[dict] = []
+    conversation_history: List[dict] = [] # sqlite memory (managed by CrewAI)
 
 @persist()
 class ChatFlow(Flow[ChatState]):

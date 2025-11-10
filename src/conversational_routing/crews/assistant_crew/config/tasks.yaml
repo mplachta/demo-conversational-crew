@@ -1,11 +1,9 @@
 answer_crewai_questions_task:
-  agent: crewai_expert_agent
+  agent: benefits_expert_agent
   description: >
-    Respond to user questions about the CrewAI framework.
+    Respond to user questions about the Chase Freedom Benefits.
 
     Current message: {current_message}
     Conversation history: {conversation_history}
   expected_output: >
-    If required:
-    - Provide links to relevant documentation
-    - Offer practical examples
+    Concise response to the user question.

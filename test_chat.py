@@ -2,8 +2,8 @@ from src.conversational_routing.main import ChatFlow
 from colorama import Fore, Style
 
 messages = [
-    "What is an Agent?",
-    "How to set up Azure OpenAI connection?"
+    "Is there an extended warranty protection?",
+    "What are coverage limits?"
 ]
 
 # First chat message
