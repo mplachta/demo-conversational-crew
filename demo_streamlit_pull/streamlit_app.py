@@ -29,7 +29,7 @@ def poll_status(kickoff_id):
             if status_data["state"] == "SUCCESS":
                 result = json.loads(status_data["result"])
                 response = result["response"]
-                st.chat_message("crew", avatar=crew_favicon).markdown(response)
+                st.chat_message("crew", avatar=crew_favicon).text(response)
                 
                 st.session_state.crewai_conversation_id = result["id"]
                 return response
@@ -82,24 +82,25 @@ various topics to see how the agents interact and collaborate.
 
 Get started by typing a message in the chat input below!
 
-The Crew that is answering the questions is called "CrewAI Expert".
-It can answer questions about the CrewAI framework, provide concise and 
-accurate information, and guide you in its effective use. It is using RAG 
-(Retrieval-Augmented Generation) configured with our 
-[Knowledge](https://docs.crewai.com/concepts/knowledge).
+The Crew answers questions related to [Chase Freedom Benefits](https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11366_v2.pdf).
+You can ask questions such as:
+
+* What are travel benefits?
+* What are the coverage limits?
+* What are the benefits of Chase Freedom?
 """)
 
 st.sidebar.link_button("Open a CrewAI platform account", "https://app.crewai.com/", type="primary")
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"], avatar=(crew_favicon if message["role"] == "crewai" else None)):
-        st.markdown(message["content"])
+        st.text(message["content"])
 
 if prompt := st.chat_input(placeholder="Your message..."):
-    st.chat_message("user").markdown(prompt)
+    st.chat_message("user").text(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    with st.spinner(text="Thinking...", show_time=True):
+    with st.spinner(text="Thinking...", show_time=False):
         response = submit_message(prompt)
     
         st.session_state.messages.append({"role": "crewai", "content": response})
