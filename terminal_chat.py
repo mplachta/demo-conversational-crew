@@ -5,7 +5,7 @@ from colorama import Fore, Style
 print(f"{Fore.BLUE}{Style.BRIGHT}This is a terminal chat with CID crew.{Style.RESET_ALL} (type 'exit' to quit)")
 id = None
 while True:
-    user_input = input("> ")
+    user_input = input("(enter message)> ")
     if user_input == "exit":
         break
 
@@ -14,7 +14,7 @@ while True:
         "current_message": user_input,
     }
     if id is not None:
-        inputs["id"] = id
+        inputs["id"] = id # store "session_id"
     
     response = chat_flow.kickoff(inputs=inputs)
 

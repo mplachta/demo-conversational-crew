@@ -17,14 +17,14 @@ response = chat_flow.kickoff(inputs={
 print(f"{Style.BRIGHT}Response:{Style.RESET_ALL} ", response)
 print(f"{Style.DIM}{chat_flow.state}{Style.RESET_ALL}")
 
-id = chat_flow.state.id
+session_id = chat_flow.state.id
 
 print(f"\n{Fore.BLUE}{Style.BRIGHT}Question #2{Style.RESET_ALL}")
 
 chat_flow = ChatFlow()
 response = chat_flow.kickoff(inputs={
     "current_message": messages[1],
-    "id": id
+    "id": session_id
 })
 
 print(f"{Style.BRIGHT}Response:{Style.RESET_ALL} ", response)
