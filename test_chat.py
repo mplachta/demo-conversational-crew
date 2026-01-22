@@ -2,30 +2,26 @@ from src.conversational_routing.main import ChatFlow
 from colorama import Fore, Style
 
 messages = [
+    "Hello",
+    "Tell me about benefits",
     "Is there an extended warranty protection?",
     "What are coverage limits?"
 ]
 
-# First chat message
-print(f"{Fore.BLUE}{Style.BRIGHT}Question #1{Style.RESET_ALL}")
+session_id = None
 
-chat_flow = ChatFlow()
-response = chat_flow.kickoff(inputs={
-    "current_message": messages[0],
-})
-
-print(f"{Style.BRIGHT}Response:{Style.RESET_ALL} ", response)
-print(f"{Style.DIM}{chat_flow.state}{Style.RESET_ALL}")
-
-session_id = chat_flow.state.id
-
-print(f"\n{Fore.BLUE}{Style.BRIGHT}Question #2{Style.RESET_ALL}")
-
-chat_flow = ChatFlow()
-response = chat_flow.kickoff(inputs={
-    "current_message": messages[1],
-    "id": session_id
-})
-
-print(f"{Style.BRIGHT}Response:{Style.RESET_ALL} ", response)
-print(f"{Style.DIM}{chat_flow.state}{Style.RESET_ALL}")
+for i, message in enumerate(messages):
+    print(f"\n{Fore.BLUE}{Style.BRIGHT}Question #{i + 1}{Style.RESET_ALL}")
+    
+    chat_flow = ChatFlow()
+    inputs = {"current_message": message}
+    
+    if session_id is not None:
+        inputs["id"] = session_id
+    
+    response = chat_flow.kickoff(inputs=inputs)
+    
+    print(f"{Style.BRIGHT}Response:{Style.RESET_ALL} ", response)
+    print(f"{Style.DIM}{chat_flow.state}{Style.RESET_ALL}")
+    
+    session_id = chat_flow.state.id
