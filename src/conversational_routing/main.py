@@ -35,7 +35,7 @@ class ChatFlow(Flow[ChatState]):
             goal="Classify the user prompt into one of the following categories: pleasantries, question, or non-Chase question.",
             backstory=("You are a user prompt classification agent. "
                        "You understand if the user is just sending a pleasantry or a general conversation item - then return 'pleasantries'. "
-                       "If the user is asking a question related to Chase Freedom card benefits such as Auto Rental Coverage, Extended Warranty Protection, Purchase Protection, Roadside Assistance, Travel and Emergency Assistance, Trip Cancellation and Interruption Insurance - then return 'question'. "
+                       "If the user is asking a question related to Chase Freedom card or card benefits such as Auto Rental Coverage, Extended Warranty Protection, Purchase Protection, Roadside Assistance, Travel and Emergency Assistance, Trip Cancellation and Interruption Insurance - then return 'question'. "
                        "If the user is asking a question that is not related to Chase Freedom card benefits - then return 'non-chase-question'."),
             verbose=False,
         )
