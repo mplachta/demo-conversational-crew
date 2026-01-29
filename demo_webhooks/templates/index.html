@@ -242,6 +242,50 @@
             font-weight: 600;
         }
 
+        .sample-questions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 1rem 1rem 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .sample-questions h1 {
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-top: 0.75rem;
+            padding-top: 0.5rem;
+            border-top: 2px solid #ff4b4b;
+        }
+
+        .sample-question-btn {
+            padding: 0.5rem 1rem;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .sample-question-btn:hover:not(:disabled) {
+            background-color: #ff4b4b;
+            color: white;
+            border-color: #ff4b4b;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(255, 75, 75, 0.3);
+        }
+
+        .sample-question-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .input-container {
             display: flex;
             gap: 0.5rem;
@@ -349,6 +393,19 @@
         
         <div class="spinner" id="spinner"></div>
         
+        <div class="sample-questions">
+            <h1>Sample Questions</h1>
+            <button class="sample-question-btn" onclick="sendSampleQuestion('What are the benefits of Chase Freedom?')">
+                What are the benefits of Chase Freedom?
+            </button>
+            <button class="sample-question-btn" onclick="sendSampleQuestion('Tell me about trip cancellation insurance.')">
+                Tell me about trip cancellation insurance.
+            </button>
+            <button class="sample-question-btn" onclick="sendSampleQuestion('What number do I call for emergency assistance?')">
+                What number do I call for emergency assistance?
+            </button>
+        </div>
+        
         <div class="input-container">
             <input 
                 type="text" 
@@ -395,6 +452,15 @@
             sendButton.disabled = isLoading;
             messageInput.disabled = isLoading;
             spinner.classList.toggle('active', isLoading);
+            
+            // Disable/enable sample question buttons
+            const sampleButtons = document.querySelectorAll('.sample-question-btn');
+            sampleButtons.forEach(btn => btn.disabled = isLoading);
+        }
+
+        function sendSampleQuestion(question) {
+            messageInput.value = question;
+            sendMessage();
         }
 
         function waitForResult(kickoffId) {
