@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrewAI Conversational Agents Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -137,10 +138,108 @@
             background-color: #ffffff;
             padding: 1rem;
             border-radius: 0.5rem;
-            white-space: pre-wrap;
             line-height: 1.6;
             border: 1px solid #e0e0e0;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .message-content h1,
+        .message-content h2,
+        .message-content h3,
+        .message-content h4,
+        .message-content h5,
+        .message-content h6 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .message-content h1 { font-size: 1.5rem; }
+        .message-content h2 { font-size: 1.3rem; }
+        .message-content h3 { font-size: 1.1rem; }
+
+        .message-content p {
+            margin-bottom: 0.75rem;
+        }
+
+        .message-content ul,
+        .message-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .message-content li {
+            margin-bottom: 0.25rem;
+        }
+
+        .message-content code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .message-content pre {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+        }
+
+        .message-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .message-content blockquote {
+            border-left: 4px solid #ff4b4b;
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 0.75rem;
+            color: #4a4a4a;
+        }
+
+        .message-content a {
+            color: #ff4b4b;
+            text-decoration: none;
+        }
+
+        .message-content a:hover {
+            text-decoration: underline;
+        }
+
+        .message-content strong {
+            font-weight: 600;
+        }
+
+        .message-content em {
+            font-style: italic;
+        }
+
+        .message-content hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .message-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .message-content table th,
+        .message-content table td {
+            border: 1px solid #e0e0e0;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .message-content table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
         }
 
         .input-container {
@@ -277,7 +376,13 @@
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
-            contentDiv.textContent = content;
+            
+            // Render markdown for crew responses, plain text for user messages
+            if (role === 'crewai') {
+                contentDiv.innerHTML = marked.parse(content);
+            } else {
+                contentDiv.textContent = content;
+            }
             
             messageDiv.appendChild(avatarDiv);
             messageDiv.appendChild(contentDiv);
