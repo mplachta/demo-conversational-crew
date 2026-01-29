@@ -21,7 +21,7 @@
         }
 
         .sidebar {
-            width: 300px;
+            width: 400px;
             background-color: #ffffff;
             padding: 2rem;
             overflow-y: auto;
@@ -44,14 +44,12 @@
             line-height: 1.6;
             color: #4a4a4a;
             margin-bottom: 1rem;
-            font-size: 0.9rem;
         }
 
         .sidebar ul {
             list-style: none;
             margin-left: 1rem;
             color: #4a4a4a;
-            font-size: 0.9rem;
         }
 
         .sidebar ul li {
@@ -74,7 +72,7 @@
             transition: background-color 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            text-align: center;
         }
 
         .btn-primary:hover {
@@ -362,27 +360,35 @@
         <p>
             This demo showcases the power of CrewAI's conversational agents. 
             Experience AI-driven conversations that adapt to your inputs and 
-            provide intelligent responses. Try asking questions or discussing 
-            various topics to see how the agents interact and collaborate.
+            provide intelligent responses.
         </p>
-        
-        <p>Get started by typing a message in the chat input below!</p>
         
         <p>
             The Crew answers questions related to 
             <a href="https://static.chasecdn.com/content/services/structured-document/document.en.pdf/card/benefits-center/product-benefits-guide-pdf/BGC11366_v2.pdf" 
                style="color: #ff4b4b;" target="_blank">Chase Freedom Benefits</a>.
-            You can ask questions such as:
+        </p>
+
+        <p>
+            The crew is processing the messages in the following way:
         </p>
         
         <ul>
-            <li>What are travel benefits?</li>
-            <li>What are the coverage limits?</li>
-            <li>What are the benefits of Chase Freedom?</li>
+            <li>First it classifies the message into one of the categories: pleasentries, chase card benefits related questions, other questions</li>
+            <li><b>Pleasentries</b>  are processed by a single, lite agent</li>
+            <li><b>Chase card benefits related questions</b> entries are answered by a Crew that is using a <b>knowledge</b> from a PDF file</li>
+            <li><b>Other questions</b> do not call an agent and just return a generic response asking for a different question</li>
         </ul>
+
+        <a href="https://app.crewai.com/" target="_blank" class="btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            Try it on CrewAI Platform
+        </a>
         
-        <a href="https://app.crewai.com/" target="_blank" class="btn-primary">
-            Open a CrewAI platform account
+        <a href="https://github.com/crewAIInc/template_conversational_example" target="_blank" class="btn-primary" style="margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background-color: rgba(255, 75, 75, 0.85);">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            View on GitHub
         </a>
     </div>
     
