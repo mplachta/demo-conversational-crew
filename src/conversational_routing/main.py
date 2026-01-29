@@ -7,6 +7,7 @@ from crewai.flow import Flow, listen, start, persist, router, or_
 from crewai import Agent
 
 from conversational_routing.crews.assistant_crew.assistant_crew import AssistantCrew
+from conversational_routing.models.vertex import llm
 
 class ChatState(BaseModel):
     # id : str is a hidden Flow state property maintained by CrewAI framework
@@ -38,6 +39,7 @@ class ChatFlow(Flow[ChatState]):
                        "If the user is asking a question related to Chase Freedom card or card benefits such as Auto Rental Coverage, Extended Warranty Protection, Purchase Protection, Roadside Assistance, Travel and Emergency Assistance, Trip Cancellation and Interruption Insurance - then return 'question'. "
                        "If the user is asking a question that is not related to Chase Freedom card benefits - then return 'non-chase-question'."),
             verbose=False,
+            llm=llm
         )
         
         classification_task = (
@@ -67,6 +69,7 @@ class ChatFlow(Flow[ChatState]):
                 "You understand if the user is just sending a pleasantry or a general conversation item "
                 "You respond to the user's pleasantry with a friendly, short message."),
             verbose=False,
+            llm=llm
         )
         
         self.state.current_agent_response = simple_response_agent.kickoff(f"Respond to the user's pleasantry: '{self.state.current_message}'.").raw
