@@ -429,7 +429,7 @@
         const sendButton = document.getElementById('sendButton');
         const spinner = document.getElementById('spinner');
 
-        function addMessage(role, content) {
+        function addMessage(role, content, agentName = null) {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message';
             
@@ -440,9 +440,28 @@
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
             
+            // Add agent name header if provided
+            if (agentName) {
+
+                const agentDisplayNames = {
+                    "simple_response_agent": "Pleasentries Agent",
+                    "chase_question_crew": "Chase Benefits Expert Crew",
+                    "non_chase_question": "Deterministic Code"
+                }
+                const agentHeader = document.createElement('div');
+                agentHeader.style.fontSize = '0.85rem';
+                agentHeader.style.color = '#666';
+                agentHeader.style.marginBottom = '0.5rem';
+                agentHeader.style.fontWeight = '600';
+                agentHeader.textContent = `SelectedAgent: ${agentDisplayNames[agentName]}`;
+                contentDiv.appendChild(agentHeader);
+            }
+            
             // Render markdown for crew responses, plain text for user messages
             if (role === 'crewai') {
-                contentDiv.innerHTML = marked.parse(content);
+                const responseContent = document.createElement('div');
+                responseContent.innerHTML = marked.parse(content);
+                contentDiv.appendChild(responseContent);
             } else {
                 contentDiv.textContent = content;
             }
@@ -496,7 +515,10 @@
                             }
                             
                             eventSource.close();
-                            resolve(data.response);
+                            resolve({
+                                response: data.response,
+                                current_agent: data.current_agent
+                            });
                         }
                     } catch (error) {
                         eventSource.close();
@@ -545,10 +567,10 @@
                 const kickoffId = data.kickoff_id;
                 
                 // Wait for result via SSE
-                const crewResponse = await waitForResult(kickoffId);
+                const result = await waitForResult(kickoffId);
                 
-                // Add crew response to chat
-                addMessage('crewai', crewResponse);
+                // Add crew response to chat with agent name
+                addMessage('crewai', result.response, result.current_agent);
                 
             } catch (error) {
                 console.error('Error:', error);
