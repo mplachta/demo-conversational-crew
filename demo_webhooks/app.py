@@ -115,7 +115,8 @@ def webhook():
                 # Store the response using execution_id as the key
                 webhook_responses[execution_id] = {
                     "response": result_data.get("response"),
-                    "conversation_id": result_data.get("id")
+                    "conversation_id": result_data.get("id"),
+                    "current_agent": result_data.get("current_agent")
                 }
                 
                 # Push to SSE client if connected
@@ -123,7 +124,8 @@ def webhook():
                     try:
                         sse_clients[execution_id].put({
                             "response": result_data.get("response"),
-                            "conversation_id": result_data.get("id")
+                            "conversation_id": result_data.get("id"),
+                            "current_agent": result_data.get("current_agent")
                         })
                     except Exception:
                         # Client may have disconnected, ignore
