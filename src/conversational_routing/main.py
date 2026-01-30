@@ -89,7 +89,7 @@ class ChatFlow(Flow[ChatState]):
     @listen("respond_to_non_chase_question")
     def answer_non_chase_question(self):
         self.state.current_agent_response = "This doesn't look like a Chase Freedom card question, can you please try something else?"
-        self.state.current_agent = "non_chase_question_crew"
+        self.state.current_agent = "non_chase_question"
         
     @listen(or_(answer_pleasantries, answer_question, answer_non_chase_question))
     def send_response(self):
