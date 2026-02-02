@@ -1,3 +1,4 @@
+import time
 from src.conversational_routing.main import ChatFlow
 from colorama import Fore, Style
 
@@ -25,3 +26,5 @@ for i, message in enumerate(messages):
     print(f"{Style.DIM}{chat_flow.state}{Style.RESET_ALL}")
     
     session_id = chat_flow.state.id
+    time.sleep(5)
+    
