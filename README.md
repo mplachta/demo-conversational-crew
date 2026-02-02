@@ -101,7 +101,7 @@ The first message sends the following JSON payload to the `/kickoff` endpoint:
 
 ```json
 {
-    "current_message": "Hello, I am a chatbot. How can I help you today?"
+    "current_message": "Hello! I need some help!"
 }
 ```
 
@@ -128,7 +128,7 @@ Consecutive messages should be sent to the `/kickoff` endpoint with the followin
 
 ```json
 {
-    "current_message": "I need help with something.",
+    "current_message": "I need help with travel insurance.",
     "id": "UNIQUE-CONVERSATION-ID"
 }
 ```
