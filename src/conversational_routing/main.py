@@ -7,7 +7,7 @@ from crewai.flow import Flow, listen, or_, persist, router, start
 from pydantic import BaseModel
 
 from conversational_routing.crews.assistant_crew.assistant_crew import AssistantCrew
-from conversational_routing.models.gemini import llm
+from conversational_routing.models.vertex import llm
 
 
 class ChatState(BaseModel):
@@ -29,7 +29,7 @@ class ChatFlow(Flow[ChatState]):
     @start()
     def initial_processing(self):
         pass
-    
+
     @router(initial_processing)
     def classify_message(self):
         classification_agent = Agent(

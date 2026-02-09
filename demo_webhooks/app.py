@@ -2,13 +2,15 @@
 """
 Flask-based chat application with webhook support for CrewAI conversational agents.
 """
-import os
+
 import json
-import requests
-from flask import Flask, render_template, request, jsonify, session, Response
-from dotenv import load_dotenv
-import secrets
+import os
 import queue
+import secrets
+
+import requests
+from dotenv import load_dotenv
+from flask import Flask, Response, jsonify, render_template, request, session
 
 load_dotenv()
 
@@ -42,21 +44,21 @@ def send_message():
     """
     data = request.json
     message = data.get("message")
-    
+
     if not message:
         return jsonify({"error": "Message is required"}), 400
-    
+
     # Get or initialize conversation ID
     conversation_id = session.get("crewai_conversation_id")
-    
+
     # Prepare inputs for CrewAI
     inputs = {"current_message": message}
     if conversation_id:
         inputs["id"] = conversation_id
-    
+
     # Get the webhook URL (ngrok URL + /webhook endpoint)
     webhook_url = f"{WEBHOOK_URL_BASE}/api/webhook"
-    
+
     # Make request to CrewAI with webhook
     try:
         response = requests.post(
@@ -69,22 +71,19 @@ def send_message():
                     "realtime": True,
                     "authentication": {
                         "strategy": "bearer",
-                        "token": WEBHOOK_BEARER_TOKEN
-                    }
-                }
+                        "token": WEBHOOK_BEARER_TOKEN,
+                    },
+                },
             },
-            headers=HEADERS
+            headers=HEADERS,
         )
-        
+
         if response.ok:
             kickoff_id = response.json().get("kickoff_id")
-            return jsonify({
-                "status": "processing",
-                "kickoff_id": kickoff_id
-            })
+            return jsonify({"status": "processing", "kickoff_id": kickoff_id})
         else:
             return jsonify({"error": response.text}), response.status_code
-            
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -95,42 +94,44 @@ def webhook():
     Receive webhook callback from CrewAI when processing is complete.
     """
     data = request.json
-    
+
     # Handle new webhook format with events array
     events = data.get("events", [])
-    
+
     for event in events:
         event_type = event.get("type")
         execution_id = event.get("execution_id")
         event_data = event.get("data", {})
-        
+
         # Process flow_finished events
         if event_type == "flow_finished":
             result = event_data.get("result")
-            
+
             if result:
                 # Parse the result JSON string
                 result_data = json.loads(result)
-                
+
                 # Store the response using execution_id as the key
                 webhook_responses[execution_id] = {
                     "response": result_data.get("response"),
                     "conversation_id": result_data.get("id"),
-                    "current_agent": result_data.get("current_agent")
+                    "current_agent": result_data.get("current_agent"),
                 }
-                
+
                 # Push to SSE client if connected
                 if execution_id in sse_clients:
                     try:
-                        sse_clients[execution_id].put({
-                            "response": result_data.get("response"),
-                            "conversation_id": result_data.get("id"),
-                            "current_agent": result_data.get("current_agent")
-                        })
+                        sse_clients[execution_id].put(
+                            {
+                                "response": result_data.get("response"),
+                                "conversation_id": result_data.get("id"),
+                                "current_agent": result_data.get("current_agent"),
+                            }
+                        )
                     except Exception:
                         # Client may have disconnected, ignore
                         pass
-    
+
     return jsonify({"status": "received"}), 200
 
 
@@ -139,18 +140,19 @@ def stream(kickoff_id):
     """
     Server-Sent Events endpoint for real-time webhook results.
     """
+
     def event_stream():
         # Create a queue for this client
         client_queue = queue.Queue()
         sse_clients[kickoff_id] = client_queue
-        
+
         try:
             # Check if result already exists (webhook arrived before SSE connection)
             if kickoff_id in webhook_responses:
                 response_data = webhook_responses.pop(kickoff_id)
                 yield f"data: {json.dumps(response_data)}\n\n"
                 return
-            
+
             # Wait for webhook callback (timeout after 60 seconds)
             try:
                 response_data = client_queue.get(timeout=60)
@@ -161,7 +163,7 @@ def stream(kickoff_id):
             # Clean up
             if kickoff_id in sse_clients:
                 del sse_clients[kickoff_id]
-    
+
     response = Response(event_stream(), mimetype="text/event-stream")
     response.headers["Cache-Control"] = "no-cache"
     response.headers["X-Accel-Buffering"] = "no"
@@ -173,11 +175,11 @@ def update_session():
     """Update session with conversation ID."""
     data = request.json
     conversation_id = data.get("conversation_id")
-    
+
     if conversation_id:
         session["crewai_conversation_id"] = conversation_id
         return jsonify({"status": "updated"})
-    
+
     return jsonify({"error": "conversation_id required"}), 400
 
 

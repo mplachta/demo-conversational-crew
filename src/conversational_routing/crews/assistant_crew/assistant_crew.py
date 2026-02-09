@@ -1,9 +1,10 @@
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task
-from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource
 from crewai.knowledge.knowledge_config import KnowledgeConfig
+from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource
+from crewai.project import CrewBase, agent, crew, task
 
 from conversational_routing.models.vertex import embedder_configuration, llm
+
 
 @CrewBase
 class AssistantCrew:
@@ -17,9 +18,11 @@ class AssistantCrew:
     def benefits_expert_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["benefits_expert_agent"],
-            knowledge_sources=[PDFKnowledgeSource(
-                file_paths=["freedom_benefits.pdf"],
-            )],
+            knowledge_sources=[
+                PDFKnowledgeSource(
+                    file_paths=["freedom_benefits.pdf"],
+                )
+            ],
             knowledge_config=KnowledgeConfig(results_limit=5, score_threshold=0.7),
             embedder=embedder_configuration,
             llm=llm,
