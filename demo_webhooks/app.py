@@ -7,6 +7,7 @@ import json
 import os
 import queue
 import secrets
+import threading
 
 import requests
 from dotenv import load_dotenv
@@ -34,7 +35,23 @@ sse_clients = {}
 @app.route("/")
 def index():
     """Render the chat interface."""
+    # Fire-and-forget warm-up request; no timeout and non-blocking for the route.
+    if BASE_URL:
+        threading.Thread(
+            target=_warm_inputs_endpoint,
+            args=(f"{BASE_URL}/inputs",),
+            daemon=True,
+        ).start()
     return render_template("index.html")
+
+
+def _warm_inputs_endpoint(url: str) -> None:
+    try:
+        # Explicitly pass timeout=None to avoid any client-side timeout.
+        requests.get(url, headers=HEADERS, timeout=120)
+    except Exception:
+        # Ignore errors; this is best-effort and should not impact the request.
+        pass
 
 
 @app.route("/api/send_message", methods=["POST"])
