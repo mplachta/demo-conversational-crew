@@ -1,9 +1,19 @@
+import os
+
 from crewai import Agent, Crew, Process, Task
 from crewai.knowledge.knowledge_config import KnowledgeConfig
 from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource
 from crewai.project import CrewBase, agent, crew, task
 
-from conversational_routing.models.vertex import embedder_configuration, llm
+model_family = os.getenv("MODEL_FAMILY", "gemini")
+if model_family == "gemini":
+    from conversational_routing.models.gemini import embedder_configuration, llm
+elif model_family == "vertex":
+    from conversational_routing.models.vertex import embedder_configuration, llm
+elif model_family == "openai":
+    from conversational_routing.models.openai import embedder_configuration, llm
+else:
+    raise ValueError(f"Unsupported model family: {model_family}")
 
 
 @CrewBase

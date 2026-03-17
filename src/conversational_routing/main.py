@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import json
+import os
 from typing import List
 
 from crewai import Agent
@@ -7,7 +8,17 @@ from crewai.flow import Flow, listen, or_, persist, router, start
 from pydantic import BaseModel
 
 from conversational_routing.crews.assistant_crew.assistant_crew import AssistantCrew
-from conversational_routing.models.vertex import llm
+
+model_family = os.getenv("MODEL_FAMILY", "gemini")
+
+if model_family == "gemini":
+    from conversational_routing.models.gemini import llm
+elif model_family == "vertex":
+    from conversational_routing.models.vertex import llm
+elif model_family == "openai":
+    from conversational_routing.models.openai import llm
+else:
+    raise ValueError(f"Unsupported model family: {model_family}")
 
 
 class ChatState(BaseModel):
