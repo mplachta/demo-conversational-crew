@@ -90,6 +90,7 @@ def send_message():
                         "lite_agent_execution_started",
                         "knowledge_search_query_started",
                         "knowledge_query_started",
+                        "crew_kickoff_started",
                     ],
                     "url": webhook_url,
                     "realtime": True,
@@ -153,16 +154,12 @@ def webhook():
                         # Client may have disconnected, ignore
                         pass
 
-        elif (
-            event_type == "lite_agent_execution_started"
-            or event_type == "agent_execution_started"
-        ):
+        elif event_type == "lite_agent_execution_started":
             agent_info = event_data.get("agent_info", {})
             agent_role = agent_info.get("role")
             status_messages = {
                 "User Prompt Classification Agent": "Understanding the user's message...",
                 "Chase Freedom Card Assistant": "Preparing a response...",
-                "Chase Freedom Benefits Expert": "Drafting a response using knowledge...",
             }
             status_text = status_messages.get(agent_role)
             if status_text and execution_id in sse_clients:
@@ -178,6 +175,24 @@ def webhook():
             if execution_id in sse_clients:
                 try:
                     sse_clients[execution_id].put({"status": "Retrieving knowledge..."})
+                except Exception:
+                    pass
+
+        elif event_type == "agent_execution_started":
+            if execution_id in sse_clients:
+                try:
+                    sse_clients[execution_id].put(
+                        {"status": "Drafting a response using knowledge..."}
+                    )
+                except Exception:
+                    pass
+
+        elif event_type == "crew_kickoff_started":
+            if execution_id in sse_clients:
+                try:
+                    sse_clients[execution_id].put(
+                        {"status": "Picked the right Crew to respond..."}
+                    )
                 except Exception:
                     pass
 

@@ -350,9 +350,24 @@
         }
 
         .status-content {
-            color: #888;
             font-style: italic;
-            background-color: #fafafa;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7, #06b6d4, #6366f1);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            border-color: rgba(99, 102, 241, 0.3);
+            animation: aiTextShimmer 2s linear infinite, aiGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes aiTextShimmer {
+            0%   { background-position: 100% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        @keyframes aiGlow {
+            0%, 100% { box-shadow: 0 0 8px rgba(99, 102, 241, 0.2), 0 1px 3px rgba(0, 0, 0, 0.08); }
+            50%       { box-shadow: 0 0 22px rgba(139, 92, 246, 0.4), 0 1px 3px rgba(0, 0, 0, 0.08); }
         }
 
     </style>
