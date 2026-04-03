@@ -8,6 +8,7 @@ import os
 import queue
 import secrets
 import threading
+import time
 
 import requests
 from dotenv import load_dotenv
@@ -83,7 +84,13 @@ def send_message():
             json={
                 "inputs": inputs,
                 "webhooks": {
-                    "events": ["flow_finished"],
+                    "events": [
+                        "flow_finished",
+                        "agent_execution_started",
+                        "lite_agent_execution_started",
+                        "knowledge_search_query_started",
+                        "knowledge_query_started",
+                    ],
                     "url": webhook_url,
                     "realtime": True,
                     "authentication": {
@@ -128,26 +135,51 @@ def webhook():
                 # Parse the result JSON string
                 result_data = json.loads(result)
 
-                # Store the response using execution_id as the key
-                webhook_responses[execution_id] = {
+                final_data = {
                     "response": result_data.get("response"),
                     "conversation_id": result_data.get("id"),
                     "current_agent": result_data.get("current_agent"),
+                    "done": True,
                 }
+
+                # Store the response using execution_id as the key
+                webhook_responses[execution_id] = final_data
 
                 # Push to SSE client if connected
                 if execution_id in sse_clients:
                     try:
-                        sse_clients[execution_id].put(
-                            {
-                                "response": result_data.get("response"),
-                                "conversation_id": result_data.get("id"),
-                                "current_agent": result_data.get("current_agent"),
-                            }
-                        )
+                        sse_clients[execution_id].put(final_data)
                     except Exception:
                         # Client may have disconnected, ignore
                         pass
+
+        elif (
+            event_type == "lite_agent_execution_started"
+            or event_type == "agent_execution_started"
+        ):
+            agent_info = event_data.get("agent_info", {})
+            agent_role = agent_info.get("role")
+            status_messages = {
+                "User Prompt Classification Agent": "Understanding the user's message...",
+                "Chase Freedom Card Assistant": "Preparing a response...",
+                "Chase Freedom Benefits Expert": "Drafting a response using knowledge...",
+            }
+            status_text = status_messages.get(agent_role)
+            if status_text and execution_id in sse_clients:
+                try:
+                    sse_clients[execution_id].put({"status": status_text})
+                except Exception:
+                    pass
+
+        elif (
+            event_type == "knowledge_query_started"
+            or event_type == "knowledge_search_query_started"
+        ):
+            if execution_id in sse_clients:
+                try:
+                    sse_clients[execution_id].put({"status": "Retrieving knowledge..."})
+                except Exception:
+                    pass
 
     return jsonify({"status": "received"}), 200
 
@@ -162,20 +194,27 @@ def stream(kickoff_id):
         # Create a queue for this client
         client_queue = queue.Queue()
         sse_clients[kickoff_id] = client_queue
+        deadline = time.time() + 60
 
         try:
-            # Check if result already exists (webhook arrived before SSE connection)
+            # Check if final result already exists (webhook arrived before SSE connection)
             if kickoff_id in webhook_responses:
                 response_data = webhook_responses.pop(kickoff_id)
                 yield f"data: {json.dumps(response_data)}\n\n"
                 return
 
-            # Wait for webhook callback (timeout after 60 seconds)
-            try:
-                response_data = client_queue.get(timeout=60)
-                yield f"data: {json.dumps(response_data)}\n\n"
-            except queue.Empty:
-                yield f"data: {json.dumps({'error': 'Timeout waiting for response'})}\n\n"
+            # Loop until we receive a done event or timeout
+            while time.time() < deadline:
+                remaining = deadline - time.time()
+                try:
+                    response_data = client_queue.get(timeout=min(remaining, 5))
+                    yield f"data: {json.dumps(response_data)}\n\n"
+                    if response_data.get("done"):
+                        return
+                except queue.Empty:
+                    pass
+
+            yield f"data: {json.dumps({'error': 'Timeout waiting for response'})}\n\n"
         finally:
             # Clean up
             if kickoff_id in sse_clients:
