@@ -9,6 +9,7 @@ messages = [
     "Tell me about benefits",
     "Is there an extended warranty protection?",
     "What are coverage limits?",
+    # "Tell me about travel insurance",
 ]
 
 session_id = None
@@ -28,4 +29,4 @@ for i, message in enumerate(messages):
     print(f"{Style.DIM}{chat_flow.state}{Style.RESET_ALL}")
 
     session_id = chat_flow.state.id
-    time.sleep(5)
+    # time.sleep(5)
