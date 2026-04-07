@@ -10,6 +10,15 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "aiofiles"
+version = "24.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/03/a88171e277e8caa88a4c77808c20ebb04ba74cc4681bf1e9416c862de237/aiofiles-24.1.0.tar.gz", hash = "sha256:22a075c9e5a3810f0c2e48f3008c94d68c65d763b9b03857924c99e57355166c", size = 30247, upload-time = "2024-06-24T11:02:03.584Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a5/45/30bb92d442636f570cb5651bc661f52b610e2eec3f891a5dc3a4c3667db0/aiofiles-24.1.0-py3-none-any.whl", hash = "sha256:b4ec55f4195e3eb5d7abd1bf7e061763e864dd4954231fb8539a0ef8bb8260e5", size = 15896, upload-time = "2024-06-24T11:02:01.529Z" },
+]
+
+[[package]]
 name = "aiohappyeyeballs"
 version = "2.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -502,18 +511,19 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "colorama", specifier = ">=0.4.6" },
-    { name = "crewai", extras = ["google-genai", "tools"], specifier = "==1.13.0" },
-    { name = "flask", specifier = ">=3.1.2" },
-    { name = "google-generativeai", specifier = ">=0.8.6" },
-    { name = "slack-bolt", specifier = ">=1.27.0" },
-    { name = "streamlit", specifier = "==1.51.0" },
+    { name = "crewai", extras = ["google-genai", "tools"], specifier = "==1.14.0" },
+    { name = "flask", specifier = "~=3.1.3" },
+    { name = "google-generativeai", specifier = "~=0.8.6" },
+    { name = "slack-bolt", specifier = "~=1.28.0" },
+    { name = "streamlit", specifier = "~=1.56.0" },
 ]
 
 [[package]]
 name = "crewai"
-version = "1.13.0"
+version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "aiofiles" },
     { name = "aiosqlite" },
     { name = "appdirs" },
     { name = "chromadb" },
@@ -544,9 +554,9 @@ dependencies = [
     { name = "tomli-w" },
     { name = "uv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/54/4a/ea4470501934a9cfc228bcbb572c48cffd5d573634e8d6e97577ff9a1e25/crewai-1.13.0.tar.gz", hash = "sha256:a2d105d00f65a9a306d1aa57c167f77b543b66983c1729753bf9a1c900a0bef9", size = 7773234, upload-time = "2026-04-02T23:17:04.775Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2c/0b/93fa11bdf22891aec3f7ec267595188fd3fd66dd81f54bed10cfc3570322/crewai-1.14.0.tar.gz", hash = "sha256:308cbd5c44e40ab45e8a65c02afb218462f754f01f7c4138ece2ea1762cc0d77", size = 7789717, upload-time = "2026-04-07T17:49:10.462Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b0/db/8b6a5026bb038e538c59b643ecd940e731ed3e4c3769fdc54d803ce6b5a1/crewai-1.13.0-py3-none-any.whl", hash = "sha256:6de1241960c18f5ae984005763b0311a1e11224d59830e42020d12ebf0665b5f", size = 1021512, upload-time = "2026-04-02T23:17:02.666Z" },
+    { url = "https://files.pythonhosted.org/packages/b4/cd/f582ff265e2ccc5196aacf4822aecad3c3d40bd62d247fd691412ff333cd/crewai-1.14.0-py3-none-any.whl", hash = "sha256:fb358763372fec7518e5c1fb6abb493b5453bebc19126f96456080965349b4e7", size = 1041218, upload-time = "2026-04-07T17:49:08.136Z" },
 ]
 
 [package.optional-dependencies]
@@ -559,12 +569,11 @@ tools = [
 
 [[package]]
 name = "crewai-tools"
-version = "1.13.0"
+version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "crewai" },
-    { name = "docker" },
     { name = "pymupdf" },
     { name = "python-docx" },
     { name = "pytube" },
@@ -572,9 +581,9 @@ dependencies = [
     { name = "tiktoken" },
     { name = "youtube-transcript-api" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/32/0a4064e89014e3423c52d27a73309091997c8918383b4400e86726719db6/crewai_tools-1.13.0.tar.gz", hash = "sha256:d676937f4cc1d2f5dfc91bb28ae49a8e0950c4906050f562e2ee1ace53a30d7c", size = 867523, upload-time = "2026-04-02T23:17:10.304Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/64/83/5a86e501674b1a07e166f399cbb17ce3d3891a87574a5f81251f82227ba8/crewai_tools-1.14.0.tar.gz", hash = "sha256:39fcd3e1ef0a469f8c690ed9e9024fc404b2a8f9c9cb9f6bcc92dcb7e85c6ea7", size = 865825, upload-time = "2026-04-07T17:49:16.157Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2b/e5/c854096ca81f33f5bf828fc592262e31836dc0d824bc49a5ad2d8592795a/crewai_tools-1.13.0-py3-none-any.whl", hash = "sha256:a4f7854b06dacd12378598f9f3a9d208dd518cf438e95c601871b6be3358c989", size = 781725, upload-time = "2026-04-02T23:17:08.622Z" },
+    { url = "https://files.pythonhosted.org/packages/8c/48/1d4a6adbaf12f2e49e11812b7fb2b175066989862fdf3d21dd739bd39e6a/crewai_tools-1.14.0-py3-none-any.whl", hash = "sha256:bcc88da3eb877a5c336d901d396c6aeb29a0408add003b398374f3e257465da7", size = 779732, upload-time = "2026-04-07T17:49:14.289Z" },
 ]
 
 [[package]]
@@ -659,20 +668,6 @@ wheels = [
 ]
 
 [[package]]
-name = "docker"
-version = "7.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
-    { name = "requests" },
-    { name = "urllib3" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/91/9b/4a2ea29aeba62471211598dac5d96825bb49348fa07e906ea930394a83ce/docker-7.1.0.tar.gz", hash = "sha256:ad8c70e6e3f8926cb8a92619b832b4ea5299e2831c14284663184e200546fa6c", size = 117834, upload-time = "2024-05-23T11:13:57.216Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e3/26/57c6fb270950d476074c087527a558ccb6f4436657314bfb6cdf484114c4/docker-7.1.0-py3-none-any.whl", hash = "sha256:c96b93b7f0a746f9e77d325bcfb87422a3d8bd4f03136ae8a85b37f1898d5fc0", size = 147774, upload-time = "2024-05-23T11:13:55.01Z" },
-]
-
-[[package]]
 name = "docstring-parser"
 version = "0.16"
 source = { registry = "https://pypi.org/simple" }
@@ -719,7 +714,7 @@ wheels = [
 
 [[package]]
 name = "flask"
-version = "3.1.2"
+version = "3.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "blinker" },
@@ -729,9 +724,9 @@ dependencies = [
     { name = "markupsafe" },
     { name = "werkzeug" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/dc/6d/cfe3c0fcc5e477df242b98bfe186a4c34357b4847e87ecaef04507332dab/flask-3.1.2.tar.gz", hash = "sha256:bf656c15c80190ed628ad08cdfd3aaa35beb087855e2f494910aa3774cc4fd87", size = 720160, upload-time = "2025-08-19T21:03:21.205Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/26/00/35d85dcce6c57fdc871f3867d465d780f302a175ea360f62533f12b27e2b/flask-3.1.3.tar.gz", hash = "sha256:0ef0e52b8a9cd932855379197dd8f94047b359ca0a78695144304cb45f87c9eb", size = 759004, upload-time = "2026-02-19T05:00:57.678Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ec/f9/7f9263c5695f4bd0023734af91bedb2ff8209e8de6ead162f35d8dc762fd/flask-3.1.2-py3-none-any.whl", hash = "sha256:ca1d8112ec8a6158cc29ea4858963350011b5c846a414cdb7a954aa9e967d03c", size = 103308, upload-time = "2025-08-19T21:03:19.499Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/9c/34f6962f9b9e9c71f6e5ed806e0d0ff03c9d1b0b2340088a0cf4bce09b18/flask-3.1.3-py3-none-any.whl", hash = "sha256:f4bcbefc124291925f1a26446da31a5178f9483862233b23c0c96a20701f670c", size = 103424, upload-time = "2026-02-19T05:00:56.027Z" },
 ]
 
 [[package]]
@@ -3227,14 +3222,14 @@ wheels = [
 
 [[package]]
 name = "slack-bolt"
-version = "1.27.0"
+version = "1.28.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "slack-sdk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4c/28/50ed0b86e48b48e6ddcc71de93b91c8ac14a55d1249e4bff0586494a2f90/slack_bolt-1.27.0.tar.gz", hash = "sha256:3db91d64e277e176a565c574ae82748aa8554f19e41a4fceadca4d65374ce1e0", size = 129101, upload-time = "2025-11-13T20:17:46.878Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/97/a62dde97e84027b252807f2044bed2edcda2d063a5cb0c535fb2be8d9b5d/slack_bolt-1.28.0.tar.gz", hash = "sha256:bfe367d867e8fb157a057248ebd4ac2d7f43acac6d0700fa31381db1e10f3b0f", size = 130768, upload-time = "2026-04-06T23:24:59.936Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/01/a8/1acb355759747ba4da5f45c1a33d641994b9e04b914908c9434f18bd97e8/slack_bolt-1.27.0-py2.py3-none-any.whl", hash = "sha256:c43c94bf34740f2adeb9b55566c83f1e73fed6ba2878bd346cdfd6fd8ad22360", size = 230428, upload-time = "2025-11-13T20:17:45.465Z" },
+    { url = "https://files.pythonhosted.org/packages/81/a9/697b6a92c728f09d5ef6b8e83dc6c8a87bc6d59499b2933ed067f11b7e30/slack_bolt-1.28.0-py2.py3-none-any.whl", hash = "sha256:738d1ca5e7c7039b6e18103d29267ced6e18c2517053eff18991fdd593acce5c", size = 234819, upload-time = "2026-04-06T23:24:58.278Z" },
 ]
 
 [[package]]
@@ -3299,7 +3294,7 @@ wheels = [
 
 [[package]]
 name = "streamlit"
-version = "1.51.0"
+version = "1.56.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "altair" },
@@ -3321,9 +3316,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "watchdog", marker = "sys_platform != 'darwin'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/59/6d/327ddd5fc35fcf2aeecb4040668337f5565a1c6c95b1e892b8bfd4bb9031/streamlit-1.51.0.tar.gz", hash = "sha256:1e742a9c0b698f466c6f5bf58d333beda5a1fbe8de660743976791b5c1446ef6", size = 9742904, upload-time = "2025-10-29T17:07:39.082Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/03/85/7c669b3a1336d34ef39fa9760fbd343185f3b15db2ad0838fd78423d1c7f/streamlit-1.56.0.tar.gz", hash = "sha256:1176acfa89ae1318b79078e8efe689a9d02e8d58e325c00fc0e55fa2f3fe8d6a", size = 8559239, upload-time = "2026-03-31T22:29:38.59Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/60/868371b6482ccd9ef423c6f62650066cf8271fdb2ee84f192695ad6b7a96/streamlit-1.51.0-py3-none-any.whl", hash = "sha256:4008b029f71401ce54946bb09a6a3e36f4f7652cbb48db701224557738cfda38", size = 10171702, upload-time = "2025-10-29T17:07:35.97Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/91/cb6f13a89e376ef179309d74f37a70ea0041d5e4b5ba5c4836dbf6e020ad/streamlit-1.56.0-py3-none-any.whl", hash = "sha256:8677a335734a30a51bc57ad0ec910e365d95f7c456fc02c60032927cd0729dc5", size = 9052089, upload-time = "2026-03-31T22:29:36.342Z" },
 ]
 
 [[package]]
