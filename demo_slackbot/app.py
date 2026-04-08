@@ -15,7 +15,8 @@ from slack_bolt.context.set_title import SetTitle
 
 load_dotenv()
 
-logging.basicConfig(level=logging.DEBUG)
+log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
+logging.basicConfig(level=getattr(logging, log_level, logging.INFO))
 logger = logging.getLogger(__name__)
 
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
