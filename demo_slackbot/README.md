@@ -4,89 +4,118 @@ A Slack bot that integrates with CrewAI's conversational routing system to provi
 
 ## Features
 
-- **Thread Support**: Responds in threads to keep conversations organized
-- **Mention-Based**: Activate the bot by mentioning it (@botname)
-- **Session Management**: Maintains conversation context across messages in the same thread
-- **CrewAI Integration**: Uses the conversational routing flow for intelligent responses
+- **AI Agent Thread**: Native Slack AI assistant panel with suggested prompts, status indicators, and thread titles
+- **Channel Mentions**: Mention the bot once in a channel thread — it responds to all follow-ups automatically
+- **Private Channel Support**: Works in both public and private channels
+- **Conversation History**: Full multi-turn context sent to CrewAI on every message
+- **Markdown Rendering**: Responses rendered with proper Slack formatting
+
+---
 
 ## Prerequisites
 
 - Python 3.10+
-- A Slack workspace where you have permission to install apps
-- Access to a deployed CrewAI API endpoint with bearer token authentication
+- A Slack workspace where you can install apps (free Developer Sandbox available at [api.slack.com](https://api.slack.com))
+- A deployed CrewAI API endpoint with its base URL and bearer token
 
-## Setup
+---
 
-### 1. Create a Slack App
+## Step 1 — Create a Slack App
 
 1. Go to [https://api.slack.com/apps](https://api.slack.com/apps)
-2. Click "Create New App" → "From scratch"
-3. Name your app (e.g., "CrewAI Assistant") and select your workspace
-4. Click "Create App"
+2. Click **Create New App** → **From scratch**
+3. Enter a name (e.g. `CrewAI Assistant`) and select your workspace
+4. Click **Create App**
 
-### 2. Configure Bot Permissions
+---
 
-1. Navigate to "OAuth & Permissions" in the sidebar
-2. Under "Scopes" → "Bot Token Scopes", add:
-   - `app_mentions:read` - View messages that directly mention the bot
-   - `chat:write` - Send messages as the bot
-   - `channels:history` - View messages in public channels
-   - `groups:history` - View messages in private channels (if needed)
-   - `im:history` - View messages in direct messages (if needed)
-   - `mpim:history` - View messages in group direct messages (if needed)
+## Step 2 — Enable Agents & AI Apps
 
-### 3. Enable Socket Mode
+1. In the left sidebar click **Agents & AI Apps**
+2. Toggle **Enable Agents & AI Apps** to On
 
-1. Navigate to "Socket Mode" in the sidebar
-2. Enable Socket Mode
-3. Generate an App-Level Token with `connections:write` scope
-4. Save this token (starts with `xapp-`)
+This automatically adds the `assistant:write` scope required for the AI thread panel, suggested prompts, and status indicators.
 
-### 4. Enable Event Subscriptions
+---
 
-1. Navigate to "Event Subscriptions" in the sidebar
-2. Toggle "Enable Events" to On
-3. Under "Subscribe to bot events", add:
-   - `app_mention` - When the bot is mentioned
-   - `assistant_thread_started` - When a user starts a thread with the assistant
-   - `assistant_thread_context_changed` - When the context of an assistant thread changes
-   - `message.channels` - Messages in channels
-   - `message.groups` - Messages in private channels (optional)
-   - `message.im` - Direct messages (optional)
+## Step 3 — Add Bot Token Scopes
 
-### 5. Install the App to Your Workspace
+1. In the left sidebar click **OAuth & Permissions**
+2. Scroll to **Scopes** → **Bot Token Scopes**
+3. Click **Add an OAuth Scope** and add each of the following:
 
-1. Navigate to "Install App" in the sidebar
-2. Click "Install to Workspace"
-3. Authorize the app
-4. Copy the "Bot User OAuth Token" (starts with `xoxb-`)
+| Scope | Purpose |
+|---|---|
+| `app_mentions:read` | Receive events when the bot is @mentioned |
+| `assistant:write` | Set status, title, and suggested prompts in AI threads (added automatically in Step 2) |
+| `chat:write` | Post messages |
+| `channels:history` | Read messages in public channels |
+| `groups:history` | Read messages in private channels |
+| `groups:read` | Access private channel info |
+| `im:history` | Read direct messages |
+| `reactions:write` | Add/remove emoji reactions |
 
-### 6. Configure Environment Variables
+---
 
-1. Copy `.env.sample` to `.env`:
+## Step 4 — Enable Socket Mode
+
+1. In the left sidebar click **Socket Mode**
+2. Toggle **Enable Socket Mode** to On
+3. Under **App-Level Tokens** click **Generate Token and Scopes**
+4. Name the token (e.g. `socket-token`), add the `connections:write` scope, click **Generate**
+5. Copy the token — it starts with `xapp-` — you'll need it later
+
+---
+
+## Step 5 — Subscribe to Events
+
+1. In the left sidebar click **Event Subscriptions**
+2. Toggle **Enable Events** to On
+3. Under **Subscribe to bot events** click **Add Bot User Event** and add:
+
+| Event | Purpose |
+|---|---|
+| `app_mention` | Bot is @mentioned in a channel |
+| `assistant_thread_started` | User opens the AI assistant panel |
+| `assistant_thread_context_changed` | User switches channels while panel is open |
+| `message.channels` | Messages in public channels (for thread follow-ups) |
+| `message.groups` | Messages in private channels (for thread follow-ups) |
+| `message.im` | Direct messages |
+
+4. Click **Save Changes**
+
+---
+
+## Step 6 — Install the App to Your Workspace
+
+1. In the left sidebar click **Install App**
+2. Click **Install to Workspace** and authorize
+3. Copy the **Bot User OAuth Token** — it starts with `xoxb-`
+
+---
+
+## Step 7 — Configure Environment Variables
+
+1. Copy the sample env file:
    ```bash
    cp .env.sample .env
    ```
 
-2. Edit `.env` and add your tokens:
+2. Open `.env` and fill in your values:
    ```
-   SLACK_BOT_TOKEN=xoxb-your-bot-token-here
-   SLACK_APP_TOKEN=xapp-your-app-token-here
-   CREWAI_BASE_URL=https://your-crewai-api-url.com
-   CREWAI_BEARER_TOKEN=your-bearer-token-here
+   SLACK_BOT_TOKEN=xoxb-...      # From Step 6
+   SLACK_APP_TOKEN=xapp-...      # From Step 4
+   CREWAI_BASE_URL=https://...   # Your CrewAI API base URL
+   CREWAI_BEARER_TOKEN=...       # Your CrewAI bearer token
+   LOG_LEVEL=INFO                # DEBUG for verbose output, INFO for normal
    ```
 
-   **Note**: Get your CrewAI API credentials from your CrewAI deployment or platform account.
+---
 
-### 7. Install Dependencies
+## Step 8 — Install Dependencies and Run
 
 ```bash
 pip install -r requirements.txt
-```
-
-## Running the Bot
-
-```bash
 python app.py
 ```
 
@@ -95,106 +124,47 @@ You should see:
 ⚡️ Slack bot is running!
 ```
 
+---
+
 ## Usage
 
-1. **Direct Messages (DMs)**: Send a direct message to the bot
-   ```
-   User DMs bot: Hello
-   Bot: [Response]
-   User: Tell me about extended warranty protection
-   Bot: [Response with full conversation context]
-   ```
+### AI Agent Thread (recommended)
 
-2. **Channel Mentions**: Mention the bot with your question in a channel
-   ```
-   @CrewAI Assistant Hello
-   @CrewAI Assistant Tell me about extended warranty protection
-   ```
+Click the bot's name → **Message** to open the AI assistant panel. The bot will greet you with suggested prompts. All follow-up messages in the same thread are handled automatically — no @mention needed.
 
-3. **Assistant Thread**: If your Slack workspace has assistant threads enabled, users can start a thread with the bot directly
-   ```
-   [User clicks "Message Assistant" or starts assistant thread]
-   └─ Bot: Hi! I'm here to help you with Chase Freedom card benefits. What would you like to know?
-      └─ What are the benefits?  (no mention needed)
-         └─ Bot: [Response about benefits]
-   ```
+### Channel Thread
 
-4. **Thread Conversations**: Once you mention the bot in a thread or start an assistant thread, it will respond to all subsequent messages in that thread without requiring additional mentions
-   ```
-   @CrewAI Assistant What are the benefits?
-   └─ Bot: [Response about benefits]
-      └─ What are the coverage limits?  (no mention needed)
-         └─ Bot: [Response with context from previous messages]
-            └─ Tell me more  (no mention needed)
-               └─ Bot: [Continues conversation with full context]
-   ```
-
-   **Note**: 
-   - Direct messages maintain conversation context throughout the entire DM conversation
-   - In channels, the bot only responds to threads where it has been explicitly mentioned or where an assistant thread was started
-
-## How It Works
-
-1. **Event Handling**: The bot listens for multiple Slack events using Socket Mode:
-   - `app_mention` - When explicitly mentioned with @botname
-   - `assistant_thread_started` - When a user starts an assistant thread
-   - `assistant_thread_context_changed` - When assistant thread context updates (ensures thread stays active)
-   - `message` - For direct messages and follow-up messages in active threads
-2. **Session Management**: 
-   - Each thread gets a unique session ID (channel_id + thread_ts)
-   - Each DM conversation gets a unique session ID (channel_id)
-   - Sessions maintain conversation context across messages
-3. **API Request**: Messages are submitted to the CrewAI API via HTTP POST to `/kickoff` endpoint
-4. **Polling**: The bot polls the `/status/{kickoff_id}` endpoint until the response is ready (max 60 seconds)
-5. **Response**: The bot replies in the same thread/DM with the AI-generated response
-
-## Architecture
-
+Mention the bot once in any message:
 ```
-User mentions bot in Slack
-    ↓
-Slack sends event to bot (Socket Mode)
-    ↓
-Bot extracts message and thread context
-    ↓
-HTTP POST to CrewAI API /kickoff endpoint
-    ↓
-Receive kickoff_id
-    ↓
-Poll /status/{kickoff_id} endpoint (every 1s, max 60s)
-    ↓
-CrewAI processes message and returns result
-    ↓
-Response sent back to Slack thread
+@CrewAI Assistant what are the Chase Freedom benefits?
 ```
+The bot activates on that thread. All follow-up replies in the thread are handled automatically — no @mention needed after the first one.
+
+### Private Channel
+
+Same as a public channel. Make sure to first invite the bot:
+```
+/invite @CrewAI Assistant
+```
+
+---
 
 ## Troubleshooting
 
-### Bot doesn't respond
-- Check that the bot is running (`python app.py`)
-- Verify Socket Mode is enabled
-- Ensure the bot is invited to the channel (`/invite @botname`)
-- Check logs for errors
+**Bot doesn't respond in channels**
+- Run `/invite @yourbot` in the channel
+- Check that `message.channels` (public) or `message.groups` (private) events are subscribed
+- Verify Socket Mode is enabled and the bot is running
 
-### "Missing required scopes" error
-- Review the OAuth scopes in your Slack app settings
-- Reinstall the app to workspace after adding scopes
+**Bot doesn't respond in private channels**
+- Confirm `groups:history` and `groups:read` scopes are added and the app has been reinstalled after adding them
+- Confirm `message.groups` is in your event subscriptions
 
-### Conversation context not maintained
-- Verify that messages are in the same thread
-- Check that `conversation_sessions` dictionary is persisting session IDs
+**Status indicator not showing in channel threads**
+- The `assistant:write` scope must be present — confirm it was added in Step 2 and reinstall the app
 
-## Development
+**`missing_scope` errors in logs**
+- Add the missing scope under **OAuth & Permissions** → **Bot Token Scopes**, then reinstall the app via **Install App** → **Install to Workspace**
 
-To modify the bot behavior:
-- Edit `app.py` to change event handling logic or polling parameters
-- Modify the CrewAI flow on your deployed API endpoint
-- Add new event handlers for different Slack events
-- Adjust `max_polling_time` in `poll_status()` function if needed (default: 60 seconds)
-
-## Security Notes
-
-- Never commit `.env` file to version control
-- Keep your Slack tokens secure
-- Use environment variables for all sensitive data
-- Consider implementing rate limiting for production use
+**Responses appear as raw markdown**
+- This is a Slack client rendering issue — the bot sends Block Kit blocks which should render automatically in modern Slack clients
