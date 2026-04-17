@@ -39,7 +39,9 @@ class ChatState(BaseModel):
 class ChatFlow(Flow[ChatState]):
     @start()
     def initial_processing(self):
-        pass
+        # This is a good place to put any initial processing logic before routing, such as filtering or sanitizing the input or reducing number of messages
+        # In this example, we're reducing the conversation history to the last 10 messages
+        self.state.conversation_history = self.state.conversation_history[-10:]
 
     @router(initial_processing)
     def classify_message(self):
